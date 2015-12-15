@@ -1,0 +1,20 @@
+default: &default
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+  username: root
+  host: localhost
+  port: 3306
+  password:
+
+development:
+  <<: *default
+  database: RongCloud_development
+
+test:
+  <<: *default
+  database: RongCloud_test
+
+production:
+  <<: *default
+  database: RongCloud_production
