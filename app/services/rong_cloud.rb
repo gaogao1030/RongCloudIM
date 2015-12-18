@@ -62,6 +62,7 @@ module RongCloud
       opt[:name] ||= "gaogao"
       opt[:portraitUri] ||= ""
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def userGagAdd(opt={})
@@ -70,6 +71,7 @@ module RongCloud
       opt[:groupId] ||= "1"
       opt[:minute] ||= "60"
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def userGagRollback(opt={})
@@ -77,12 +79,14 @@ module RongCloud
       opt[:userId] ||= "1"
       opt[:groupId] ||= "1"
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def userGagList(opt={})
       post_url = "#{@api_host}/group/user/gag/list.json"
       opt[:groupId] ||= "1"
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
   end
 end
