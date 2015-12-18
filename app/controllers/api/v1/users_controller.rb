@@ -10,6 +10,10 @@ class Api::V1::UsersController < ApplicationController
     render json: {message: e.message}, status:404
   end
 
+  rescue_from(RongCloud::ResponseError) do |e|
+    render json: {code: e.code, message: e.message}, status:500
+  end
+
   def log_in
     email = params[:email]
     password = params[:password]
