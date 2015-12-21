@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :sign_in?
-  skip_before_action :sign_in?, only: [:sign_up]
+  skip_before_action :sign_in?, only: [:sign_up,:log_in]
 
   rescue_from(RailsParam::Param::InvalidParameterError) do |p|
     render json: {message: "#{p.param}, #{p.message}"},status: :bad_request
