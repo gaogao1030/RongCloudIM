@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { render } from 'react-dom';
-import SignInPage from '../containers/SignInPage';
+import SignInOrUpPage from '../containers/SignInOrUpPage';
 
 render(
-  <SignInPage />,
+  <SignInOrUpPage />,
   document.getElementById("root")
 )
