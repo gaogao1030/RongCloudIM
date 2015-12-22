@@ -47,6 +47,12 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def log_out
+    sign_out(:user)
+    render json: {message: "登出成功"},status: 200
+  end
+
+
   def info
     render json: current_user,serializer: UserSerializer,status: 200
   end

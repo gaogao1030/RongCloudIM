@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       scope :users do
         post 'sign_in', to: "users#log_in"
         post 'sign_up', to: "users#sign_up"
+        post 'sign_out', to: "users#log_out"
         post 'reset_rongyun_token', to: "users#reset_rongyun_token"
         get 'info', to: "users#info"
       end
