@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import SignInBox from "../components/SignInBox";
 import SignUpBox from "../components/SignUpBox";
-import { switchComponent } from "../actions/SignInOrUpPage";
+import Snackbar from "material-ui/lib/snackbar";
+import { switchComponent, signIn } from "../actions/SignInOrUpPage";
 import './SignInOrUpPage.scss';
 
 export default class SignInOrUpPage extends Component {
   onSignInClick(e,refs){
-    //console.log("account:"+refs.accountRef.getValue())
-    //console.log("passowrd:"+refs.passwordRef.getValue())
-    //console.log("remember_me:"+refs.rememberMeRef.isChecked())
+    const {dispatch} = this.props
+    let account = refs.accountRef.getValue();
+    let password = refs.passwordRef.getValue();
+    let remember_me = refs.rememberMeRef.isChecked();
+    dispatch(signIn(account,password,remember_me))
   }
 
   onSignUpClick(e,refs){
@@ -20,28 +23,34 @@ export default class SignInOrUpPage extends Component {
   onSignInTabClick(e){
     const {dispatch} = this.props
     dispatch(switchComponent("SignIn"))
-    //this.setState({currentPage: "SignIn"})
   }
 
   onSignUpTabClick(e){
     const {dispatch} = this.props
     dispatch(switchComponent("SignUp"))
-    //this.setState({currentPage: "SignUp"})
   }
 
-  //constructor(props){
-  //  super(props);
-  //  this.state = {
-  //    currentPage: "SignIn"
-  //  }
-  //}
+  componentWillMount(){
+    //const {dispatch} = this.props
+    //dispatch(setErrorInfo("",false))
+  }
+
+  componentDidUpdate(){
+    const {isShow} = this.props.signInBox
+    if(isShow){
+      this.refs.signInBoxSnackbar.show()
+    }
+  }
 
   render (){
     let current;
     const {dispatch,currentComponent} = this.props
     switch( currentComponent ){
     case "SignIn":
-      current = <SignInBox
+      const {message,is_show,action} = this.props.signInBox
+      current =
+      <div>
+      <SignInBox
       accountHintText="请输入帐号"
       passwordHintText = "请输入密码"
       signInButtonLabel = "登录"
@@ -49,9 +58,18 @@ export default class SignInOrUpPage extends Component {
       onSignInClick = {(e,refs) => this.onSignInClick(e,refs)}
       onSignUpTabClick = {(e) => this.onSignUpTabClick(e)}
       onSignInTabClick = {(e) => this.onSignInTabClick(e)} />
+      <Snackbar
+        ref="signInBoxSnackbar"
+        message={message}
+        action={action}
+        isShow={is_show}
+      />
+      </div>
       break;
     case "SignUp":
-      current = <SignUpBox
+      current =
+      <div>
+      <SignUpBox
       accountHintText="请输入帐号"
       passwordHintText = "请输入密码"
       nameHintText = "请输入昵称"
@@ -61,6 +79,12 @@ export default class SignInOrUpPage extends Component {
       onSignUpClick = {(e,refs) => this.onSignUpClick(e,refs)}
       onSignUpTabClick = {(e) => this.onSignUpTabClick(e)}
       onSignInTabClick = {(e) => this.onSignInTabClick(e)} />
+      <Snackbar
+        message={message}
+        action="error"
+        openOnMount={isOnMount}
+      />
+      </div>
       break;
     }
     return (
@@ -71,7 +95,8 @@ export default class SignInOrUpPage extends Component {
 
 function select(state){
   return {
-    currentComponent: state.currentComponent
+    currentComponent: state.currentComponent,
+    signInBox: state.signInBox
   }
 }
 

@@ -1,17 +1,32 @@
 import { combineReducers } from 'redux';
-import { SWITCH_COMPONENT } from "../actions/SignInOrUpPage";
+import { SWITCH_COMPONENT,SIGN_IN_NOTICE } from "../actions/SignInOrUpPage";
 
 function currentComponent(state="SignIn",action){
   switch(action.type) {
   case SWITCH_COMPONENT:
-    return action.currentPage;
+    return action.currentComponent;
   default:
     return state;
   }
 }
 
+function signInBox(state={message:""},action) {
+  switch(action.type) {
+  case SIGN_IN_NOTICE:
+    return({
+      message: action.message,
+      isShow: action.isShow,
+      action: action.action
+    })
+  default:
+    return state;
+  }
+}
+
+
 const SignInOrUpPageReducer = combineReducers({
-  currentComponent
+  currentComponent,
+  signInBox
 });
 
 export default SignInOrUpPageReducer;
