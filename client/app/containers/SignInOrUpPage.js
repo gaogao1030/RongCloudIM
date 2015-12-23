@@ -1,13 +1,15 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import SignInBox from "../components/SignInBox";
 import SignUpBox from "../components/SignUpBox";
+import { switchComponent } from "../actions/SignInOrUpPage";
 import './SignInOrUpPage.scss';
 
 export default class SignInOrUpPage extends Component {
   onSignInClick(e,refs){
-    console.log("account:"+refs.accountRef.getValue())
-    console.log("passowrd:"+refs.passwordRef.getValue())
-    console.log("remember_me:"+refs.rememberMeRef.isChecked())
+    //console.log("account:"+refs.accountRef.getValue())
+    //console.log("passowrd:"+refs.passwordRef.getValue())
+    //console.log("remember_me:"+refs.rememberMeRef.isChecked())
   }
 
   onSignUpClick(e,refs){
@@ -16,25 +18,30 @@ export default class SignInOrUpPage extends Component {
   }
 
   onSignInTabClick(e){
-    this.setState({currentPage: "SignIn"})
+    const {dispatch} = this.props
+    dispatch(switchComponent("SignIn"))
+    //this.setState({currentPage: "SignIn"})
   }
 
   onSignUpTabClick(e){
-    this.setState({currentPage: "SignUp"})
+    const {dispatch} = this.props
+    dispatch(switchComponent("SignUp"))
+    //this.setState({currentPage: "SignUp"})
   }
 
-  constructor(props){
-    super(props);
-    this.state = {
-      currentPage: "SignIn"
-    }
-  }
+  //constructor(props){
+  //  super(props);
+  //  this.state = {
+  //    currentPage: "SignIn"
+  //  }
+  //}
 
   render (){
-    let currentComponent;
-    switch( this.state.currentPage ){
+    let current;
+    const {dispatch,currentComponent} = this.props
+    switch( currentComponent ){
     case "SignIn":
-      currentComponent = <SignInBox
+      current = <SignInBox
       accountHintText="请输入帐号"
       passwordHintText = "请输入密码"
       signInButtonLabel = "登录"
@@ -44,7 +51,7 @@ export default class SignInOrUpPage extends Component {
       onSignInTabClick = {(e) => this.onSignInTabClick(e)} />
       break;
     case "SignUp":
-      currentComponent = <SignUpBox
+      current = <SignUpBox
       accountHintText="请输入帐号"
       passwordHintText = "请输入密码"
       nameHintText = "请输入昵称"
@@ -57,7 +64,15 @@ export default class SignInOrUpPage extends Component {
       break;
     }
     return (
-      currentComponent
+      current
     );
   }
 }
+
+function select(state){
+  return {
+    currentComponent: state.currentComponent
+  }
+}
+
+export default connect(select)(SignInOrUpPage)
