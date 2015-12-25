@@ -1,4 +1,4 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < Api::BaseControllerController
   before_action :sign_in?
   skip_before_action :sign_in?, only: [:sign_up,:log_in]
 

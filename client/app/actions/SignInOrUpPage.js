@@ -10,7 +10,7 @@ export function signIn(account,password,remember_me){
   return function(dispatch,getState){
     ajax({
       type: "POST",
-      url: "http://gaoyh.corp.cimu.com:3000/api/v1/users/sign_in",
+      url: "http://localhost:3000/api/v1/users/sign_in",
       data: {email: account,password: password,remember_me: remember_me},
       success: function(res){
         dispatch(setSuccessInfo("登录成功",true))

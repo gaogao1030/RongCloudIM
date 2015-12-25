@@ -25,9 +25,9 @@
 
   app.use(webpackHotMiddleware(compiler));
 
-  app.get("/", function(req, res) {
-    return res.sendFile(__dirname + '/index.html');
-  });
+  //app.get("/", function(req, res) {
+  //  return res.sendFile(__dirname + '/index.html');
+  //});
 
   app.listen(port, "0.0.0.0", function(error) {
     if (error) {

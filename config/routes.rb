@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {sessions: "users/sessions"}
+  #devise_for :users, controllers: {sessions: "users/sessions"}
 
   namespace :api, defaults: {format: 'json'} do
     scope :v1,module: 'v1' do
@@ -13,5 +13,10 @@ Rails.application.routes.draw do
     end
 
   end
+
+  resources :home, only: [:index]
+  resources :chat, only: [:index]
+
+  root :to => "home#index"
 
 end
