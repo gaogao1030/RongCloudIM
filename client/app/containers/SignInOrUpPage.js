@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import SignInBox from "../components/SignInBox";
 import SignUpBox from "../components/SignUpBox";
-import { switchComponent, signIn } from "../actions/SignInOrUpPage";
+import { switchComponent, signIn, setSnackbarInfo } from "../actions/SignInOrUpPage";
+import {SWITCH_COMPONENT,SIGN_IN_NOTICE} from '../constants/SignInOrUpPage'
 import './SignInOrUpPage.scss';
 
 export default class SignInOrUpPage extends Component {
@@ -27,6 +28,10 @@ export default class SignInOrUpPage extends Component {
   onSignUpTabClick(e){
     const {dispatch} = this.props
     dispatch(switchComponent("SignUpBox"))
+    dispatch(setSnackbarInfo(SIGN_IN_NOTICE,"",false,""))
+  }
+
+  componentDidUpdate(){
   }
 
   componentWillMount(){
@@ -37,10 +42,11 @@ export default class SignInOrUpPage extends Component {
 
   render (){
     let current;
-    const {dispatch,currentComponent} = this.props
+    const {dispatch,currentComponent,signInBox} = this.props
     return (
       <div>
       <SignInBox
+      signInBox={signInBox}
       currentComponent = {currentComponent}
       accountHintText="请输入帐号"
       passwordHintText = "请输入密码"
