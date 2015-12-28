@@ -41,11 +41,12 @@ export default class SignInBox extends Component {
   }
 
   componentWillUpdate(){
-
   }
 
   componentDidUpdate(){
-
+   const snackbar = this.refs.snackbar;
+   const isShow = snackbar.props.isShow;
+   snackbar.setState({open:isShow});
   }
 
   componentWillUnmount(){
@@ -54,6 +55,7 @@ export default class SignInBox extends Component {
 
 
   render (){
+    const {message,isShow,action} = this.props.signInBox
     return (
       <Card className="signInBox" style={{
         "display": this.props.currentComponent=="SignInBox" ? 'block' : 'none'
@@ -84,10 +86,10 @@ export default class SignInBox extends Component {
           </CardActions>
         </div>
       <Snackbar
-        ref="signInBoxSnackbar"
-        message="aa"
-        action="aa"
-        isShow="false"
+        ref="snackbar"
+        message={message}
+        action={action}
+        isShow={isShow}
       />
       </Card>
     );

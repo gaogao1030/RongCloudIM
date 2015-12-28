@@ -19,9 +19,11 @@ class Api::V1::UsersController < Api::BaseControllerController
     password = params[:password]
     @user = User.find_by(email:email)
     if @user.nil? or not @user.valid_password?(password)
-      render json: {message: "不存在或密码错误"}, status:404
+      render json: {message: "不存在或密码错误"}, status:401
       return
     end
+    sign_out :user
+    @user.remember_me = true if params[:remember_me] == "true"
     sign_in(:user, @user)
     render json: @user,serializer: UserSerializer,status: 200
   end

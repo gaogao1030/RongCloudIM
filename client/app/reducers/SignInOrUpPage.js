@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { SWITCH_COMPONENT,SIGN_IN_NOTICE } from "../actions/SignInOrUpPage";
+import {SWITCH_COMPONENT,SIGN_IN_NOTICE} from '../constants/SignInOrUpPage'
 
 function currentComponent(state="SignInBox",action){
   switch(action.type) {
@@ -10,7 +10,7 @@ function currentComponent(state="SignInBox",action){
   }
 }
 
-function signInBox(state={message:""},action) {
+function signInBox(state={message:"",isShow:false,action:""},action) {
   switch(action.type) {
   case SIGN_IN_NOTICE:
     return({
