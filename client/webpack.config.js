@@ -1,11 +1,12 @@
 var path = require('path');
 var webpack = require('webpack');
+var host = "http://gaoyh.corp.cimu.com:4000"
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     home:[
-    'webpack-hot-middleware/client?path=http://0.0.0.0:4000/__webpack_hmr',
+    `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
     './app/startup/home.js']
   },
   output:  {

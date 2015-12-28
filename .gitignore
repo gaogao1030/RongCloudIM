@@ -17,6 +17,5 @@
 /tmp
 
 # Ignore application configuration
-/config/application.yml
 /.byebug_history
 /client/node_modules/
