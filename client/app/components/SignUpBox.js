@@ -23,9 +23,39 @@ export default class SignUpBox extends Component {
     this.props.onSignUpClick(e,refs)
   }
 
+  //life cycle
+  componentWillMount(){
+
+  }
+
+  componentDidMount(){
+
+  }
+
+  componentWillReceiveProps(){
+  }
+
+  shouldCoponentUpdate(){
+
+  }
+
+  componentWillUpdate(){
+
+  }
+
+  componentDidUpdate(){
+
+  }
+
+  componentWillUnmount(){
+
+  }
+
   render (){
     return (
-      <Card className="signUpBox">
+      <Card className="signUpBox" style={{
+        "display": this.props.currentComponent=="SignUpBox" ? 'block' : 'none'
+      }}>
         <div className="signUpBox-content">
           <CardActions style={{"textAlign":"center"}}>
             <FlatButton label= {this.props.signInButtonLabel}

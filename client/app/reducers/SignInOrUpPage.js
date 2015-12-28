@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { SWITCH_COMPONENT,SIGN_IN_NOTICE } from "../actions/SignInOrUpPage";
 
-function currentComponent(state="SignIn",action){
+function currentComponent(state="SignInBox",action){
   switch(action.type) {
   case SWITCH_COMPONENT:
     return action.currentComponent;

@@ -5,6 +5,7 @@ import RaisedButton from "material-ui/lib/raised-button";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import CheckBox from "material-ui/lib/checkbox";
+import Snackbar from "material-ui/lib/snackbar";
 
 export default class SignInBox extends Component {
   onSignInClick(e){
@@ -15,15 +16,48 @@ export default class SignInBox extends Component {
     }
     this.props.onSignInClick(e,refs)
   }
+
   onSignUpTabClick(e){
     this.props.onSignUpTabClick(e)
   }
+
   onSignInTabClick(e){
     this.props.onSignInTabClick(e)
   }
+
+  //life cycle
+  componentWillMount(){
+  }
+
+  componentDidMount(){
+
+  }
+
+  componentWillReceiveProps(){
+  }
+
+  shouldCoponentUpdate(){
+
+  }
+
+  componentWillUpdate(){
+
+  }
+
+  componentDidUpdate(){
+
+  }
+
+  componentWillUnmount(){
+
+  }
+
+
   render (){
     return (
-      <Card className="signInBox">
+      <Card className="signInBox" style={{
+        "display": this.props.currentComponent=="SignInBox" ? 'block' : 'none'
+      }}>
         <div className="signInBox-content">
           <CardActions style={{"textAlign":"center"}}>
             <FlatButton label={this.props.signInButtonLabel}
@@ -49,6 +83,12 @@ export default class SignInBox extends Component {
               onClick={ (e)=> this.onSignInClick(e)}/>
           </CardActions>
         </div>
+      <Snackbar
+        ref="signInBoxSnackbar"
+        message="aa"
+        action="aa"
+        isShow="false"
+      />
       </Card>
     );
   }

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import SignInBox from "../components/SignInBox";
 import SignUpBox from "../components/SignUpBox";
-import Snackbar from "material-ui/lib/snackbar";
 import { switchComponent, signIn } from "../actions/SignInOrUpPage";
 import './SignInOrUpPage.scss';
 
@@ -22,12 +21,12 @@ export default class SignInOrUpPage extends Component {
 
   onSignInTabClick(e){
     const {dispatch} = this.props
-    dispatch(switchComponent("SignIn"))
+    dispatch(switchComponent("SignInBox"))
   }
 
   onSignUpTabClick(e){
     const {dispatch} = this.props
-    dispatch(switchComponent("SignUp"))
+    dispatch(switchComponent("SignUpBox"))
   }
 
   componentWillMount(){
@@ -35,22 +34,14 @@ export default class SignInOrUpPage extends Component {
     //dispatch(setErrorInfo("",false))
   }
 
-  componentDidUpdate(){
-    const {isShow} = this.props.signInBox
-    if(isShow){
-      this.refs.signInBoxSnackbar.show()
-    }
-  }
 
   render (){
     let current;
     const {dispatch,currentComponent} = this.props
-    switch( currentComponent ){
-    case "SignIn":
-      const {message,is_show,action} = this.props.signInBox
-      current =
+    return (
       <div>
       <SignInBox
+      currentComponent = {currentComponent}
       accountHintText="请输入帐号"
       passwordHintText = "请输入密码"
       signInButtonLabel = "登录"
@@ -58,18 +49,8 @@ export default class SignInOrUpPage extends Component {
       onSignInClick = {(e,refs) => this.onSignInClick(e,refs)}
       onSignUpTabClick = {(e) => this.onSignUpTabClick(e)}
       onSignInTabClick = {(e) => this.onSignInTabClick(e)} />
-      <Snackbar
-        ref="signInBoxSnackbar"
-        message={message}
-        action={action}
-        isShow={is_show}
-      />
-      </div>
-      break;
-    case "SignUp":
-      current =
-      <div>
       <SignUpBox
+      currentComponent = {currentComponent}
       accountHintText="请输入帐号"
       passwordHintText = "请输入密码"
       nameHintText = "请输入昵称"
@@ -79,17 +60,8 @@ export default class SignInOrUpPage extends Component {
       onSignUpClick = {(e,refs) => this.onSignUpClick(e,refs)}
       onSignUpTabClick = {(e) => this.onSignUpTabClick(e)}
       onSignInTabClick = {(e) => this.onSignInTabClick(e)} />
-      <Snackbar
-        message={message}
-        action="error"
-        openOnMount={isOnMount}
-      />
       </div>
-      break;
-    }
-    return (
-      current
-    );
+    )
   }
 }
 
