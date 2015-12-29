@@ -1,2 +1,3 @@
 export const SWITCH_COMPONENT = "SWITCH_COMPONENT"
 export const SIGN_IN_NOTICE = "SIGN_IN_NOTICE"
+export const SIGN_UP_NOTICE = "SIGN_UP_NOTICE"

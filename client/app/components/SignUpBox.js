@@ -5,6 +5,7 @@ import RaisedButton from "material-ui/lib/raised-button";
 import Card from "material-ui/lib/card/card";
 import CardActions from "material-ui/lib/card/card-actions";
 import CheckBox from "material-ui/lib/checkbox";
+import Snackbar from "material-ui/lib/snackbar";
 
 export default class SignUpBox extends Component {
   onSignUpTabClick(e){
@@ -25,7 +26,6 @@ export default class SignUpBox extends Component {
 
   //life cycle
   componentWillMount(){
-
   }
 
   componentDidMount(){
@@ -44,7 +44,9 @@ export default class SignUpBox extends Component {
   }
 
   componentDidUpdate(){
-
+   const snackbar = this.refs.snackbar;
+   const isShow = snackbar.props.isShow;
+   snackbar.setState({open:isShow});
   }
 
   componentWillUnmount(){
@@ -52,6 +54,7 @@ export default class SignUpBox extends Component {
   }
 
   render (){
+    const {message,isShow,action} = this.props.signUpBox
     return (
       <Card className="signUpBox" style={{
         "display": this.props.currentComponent=="SignUpBox" ? 'block' : 'none'
@@ -85,6 +88,12 @@ export default class SignUpBox extends Component {
               onClick={ (e)=> this.onSignUpClick(e)}/>
           </CardActions>
         </div>
+      <Snackbar
+        ref="snackbar"
+        message={message}
+        action={action}
+        isShow={isShow}
+      />
       </Card>
     );
   }

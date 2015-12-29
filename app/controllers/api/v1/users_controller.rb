@@ -32,9 +32,10 @@ class Api::V1::UsersController < Api::BaseControllerController
     param! :name, String, required: true
     param! :email, String, required: true
     param! :password, String, required: true
+    param! :password_confirmation, String, required: true
 
     parameters = ActionController::Parameters.new(params)
-    user = User.new parameters.permit(:email,:password,:name)
+    user = User.new parameters.permit(:email,:password,:name,:password_confirmation)
     token = get_rongyun_token
     if token.nil?
       render json: {message: "得到融云token错误"}, status:403
