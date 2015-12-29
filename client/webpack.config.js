@@ -7,7 +7,10 @@ module.exports = {
   entry: {
     home:[
     `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
-    './app/startup/home.js']
+    './app/startup/home.js'],
+    chat: [
+      `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
+      './app/startup/chat.js'],
   },
   output:  {
     path: path.join(__dirname,'../app/assets/webpack'),
