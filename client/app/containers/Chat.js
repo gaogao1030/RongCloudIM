@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
+import { addMessage } from '../actions/Chat';
 import ChatBox from "../components/ChatBox";
 import "./Chat.scss";
 
@@ -11,25 +12,27 @@ export default class Chat extends Component {
   componentWillMount(){
   }
 
+  sendMessage(e,refs){
+    const { dispatch } = this.props
+    const { inputMessageRef } = refs;
+    const content = inputMessageRef.getValue()
+    dispatch(addMessage("http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg","gaogao",content))
+    inputMessageRef.setValue("")
+  }
+
 
   render (){
     return (
-      <ChatBox messages={this.props.messages}/>
+      <ChatBox messages={this.props.messages}
+               sendMessage={(e,refs) => this.sendMessage(e,refs)}
+      />
     )
   }
 }
 
 function select(state){
   return {
-    messages: [
-      {name:"gaogao",avatar_src:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",text:"hello world"},
-      {name:"gaogao",avatar_src:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",text:"hello world"},
-      {name:"gaogao",avatar_src:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",text:"hello world"},
-      {name:"gaogao",avatar_src:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",text:"hello world"},
-      {name:"gaogao",avatar_src:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",text:"hello world"},
-      {name:"gaogao",avatar_src:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",text:"hello world"},
-      {name:"gaogao",avatar_src:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",text:"hello world"},
-    ]
+    messages: state.messages
   }
 }
 

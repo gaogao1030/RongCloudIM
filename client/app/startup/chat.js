@@ -8,7 +8,13 @@ import Chat from '../containers/Chat';
 
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-const store = createStoreWithMiddleware(ChatReducer);
+const store = createStoreWithMiddleware(ChatReducer,{
+  messages:[{
+    avatar:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",
+    name:"gaogao",
+    content:"hello redux and react"
+  }]
+});
 
 render(
   <Provider store={store}>

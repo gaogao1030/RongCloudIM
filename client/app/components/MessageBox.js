@@ -8,22 +8,22 @@ import ListItem from 'material-ui/lib/lists/list-item';
 
 export default class MessageBox extends Component {
   render (){
-    const { text,className,avatar_src,name } = this.props;
+    const { content,className,avatar,name } = this.props;
     return (
       <ListItem
         className="message"
         leftAvatar={
           <Avatar
             style={{"top":"20px"}}
-            src={avatar_src}
+            src={avatar}
           />
         }
       >
-      <span>{name}</span>
+      <p>{name}</p>
       <Card className="card">
         <CardText
         style={{"wordBreak":"break-all"}}>
-        {text}
+        {content}
         </CardText>
       </Card>
       </ListItem>
