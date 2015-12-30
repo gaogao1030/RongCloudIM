@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_MESSAGE } from "../constants/Chat";
+import { ADD_MESSAGE, SET_MY_INFO } from "../constants/Chat";
 
 //function messages(state={avatar:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",name:"",content:""},action){
 //}
@@ -16,8 +16,25 @@ function messages(state=[],action){
   }
 }
 
+function my_info(state={},action){
+  switch (action.type){
+  case SET_MY_INFO:
+    return {
+      id: action.id,
+      email: action.email,
+      name: action.name,
+      rongyun_token: action.rongyun_token,
+      rongyun_app_key: action.rongyun_app_key
+    }
+  default:
+    return state;
+  }
+}
+
+
 const ChatReducer = combineReducers({
-  messages
+  messages,
+  my_info
 })
 
 export default ChatReducer
