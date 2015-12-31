@@ -10,6 +10,9 @@ Rails.application.routes.draw do
         post 'reset_rongyun_token', to: "users#reset_rongyun_token"
         get 'info', to: "users#info"
       end
+      scope :groups do
+        post 'create', to: 'groups#create'
+      end
     end
 
   end

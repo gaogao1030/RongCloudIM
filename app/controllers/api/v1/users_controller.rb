@@ -71,16 +71,5 @@ class Api::V1::UsersController < Api::BaseControllerController
   end
 
 
-private
-  def get_rongyun_token
-    result = RongCloud::Api.new.userGetToken {userId:current_user.id,name:current_user.name,portraitUri:""}
-    return result["token"]
-  end
-
-  def sign_in?
-    if current_user.nil?
-      render json: {message: "未登录"}
-    end
-  end
 
 end
