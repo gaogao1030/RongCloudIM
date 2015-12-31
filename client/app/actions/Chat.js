@@ -46,15 +46,40 @@ export function RongIMClientConnect(){
       RongIMClient.init(me.rongyun_app_key)
       RongIMClient.connect(me.rongyun_token,{
         onSuccess: function(userId){
-          console.log("login with"+ userId);
+          console.log("login with userId:"+ userId);
+          resolve();
         },
         onError: function (errorCode) {
-          let info = '';
-          console.log(errorCode)
+          console.log(errorCode);
         }
       })
-      resolve()
+      RongIMClient.setConnectionStatusListener({
+        onChanged: function(status){
+          console.log(status);
+        }
+      })
+      RongIMClient.getInstance().setOnReceiveMessageListener({
+        onReceived: function(message) {
+          console.log(message);
+        }
+      })
     })
     return promise
+  }
+}
+
+export function RongIMClientSendMessage(){
+  return function(dispatch,getState){
+    const msn = RongIMClient.TextMessage.obtain("hello by gaogao");
+    const conversationtype = RongIMClient.ConversationType.GROUP
+    const targetId = 1
+    RongIMClient.getInstance().sendMessage(conversationtype,targetId,msn,null,{
+      onSuccess: function(){
+        console.log("send success")
+      },
+      onError: function(errorCode){
+        console.log(errorCode)
+      }
+    })
   }
 }

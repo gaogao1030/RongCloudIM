@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { addMessage, getMyInfo,RongIMClientConnect } from '../actions/Chat';
+import { addMessage, getMyInfo,RongIMClientConnect, RongIMClientSendMessage } from '../actions/Chat';
 import ChatBox from "../components/ChatBox";
 import "./Chat.scss";
 
@@ -15,7 +15,7 @@ export default class Chat extends Component {
       .then(()=>
          dispatch(RongIMClientConnect())
        ).then(()=>
-         console.log("RongIMClientConnected")
+         console.log("connected")
        )
   }
 
@@ -23,6 +23,7 @@ export default class Chat extends Component {
     const { dispatch } = this.props
     const { inputMessageRef } = refs;
     const content = inputMessageRef.getValue()
+    dispatch(RongIMClientSendMessage())
     if(String(content).replace(/^\s+/,'').replace(/\s+$/,'')!=""){
       dispatch(addMessage("http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg","gaogao",content))
       inputMessageRef.setValue("")
