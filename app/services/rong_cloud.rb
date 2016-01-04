@@ -70,6 +70,7 @@ module RongCloud
       post_url = "#{@api_host}/group/sync.json"
       opt[:userId] ||= "1"
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def groupCreate(opt={})
@@ -78,6 +79,7 @@ module RongCloud
       opt[:groupId] ||= "1"
       opt[:groupName] ||= ""
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def groupJoin(opt={})
@@ -86,6 +88,7 @@ module RongCloud
       opt[:groupId] ||= "1"
       opt[:groupName] ||= ""
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def groupQuit(opt={})
@@ -93,6 +96,7 @@ module RongCloud
       opt[:userId] ||= "1"
       opt[:groupId] ||= "1"
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def groupDismiss(opt={})
@@ -100,6 +104,7 @@ module RongCloud
       opt[:userId] ||= "1"
       opt[:groupId] ||= "1"
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def groupRefresh(opt={})
@@ -107,12 +112,14 @@ module RongCloud
       opt[:groupId] ||= "1"
       opt[:groupName] ||= ""
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def groupUserQuery(opt={})
       post_url = "#{@api_host}/group/user/query.json"
       opt[:groupId] ||= "1"
       result = HTTParty.post(post_url,body:opt,headers: header_signature)
+      check_response(result)
     end
 
     def groupUserGagAdd(opt={})
@@ -125,7 +132,7 @@ module RongCloud
     end
 
     def groupUserGagRollback(opt={})
-      post_url = "#{@api_host}/user/gag/rollback.json"
+      post_url = "#{@api_host}/group/user/gag/rollback.json"
       opt[:userId] ||= "1"
       opt[:groupId] ||= "1"
       result = HTTParty.post(post_url,body:opt,headers: header_signature)

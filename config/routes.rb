@@ -1,17 +1,27 @@
 Rails.application.routes.draw do
   devise_for :users,:skip => [:sessions,:registrations,:passwords]
 
-  namespace :api, defaults: {format: 'json'} do
-    scope :v1,module: 'v1' do
+  namespace :api, defaults: {format: "json"} do
+    scope :v1,module: "v1" do
       scope :users do
-        post 'sign_in', to: "users#log_in"
-        post 'sign_up', to: "users#sign_up"
-        post 'sign_out', to: "users#log_out"
-        post 'reset_rongyun_token', to: "users#reset_rongyun_token"
-        get 'info', to: "users#info"
+        post "sign_in", to: "users#log_in"
+        post "sign_up", to: "users#sign_up"
+        post "sign_out", to: "users#log_out"
+        post "reset_rongyun_token", to: "users#reset_rongyun_token"
+        get "info", to: "users#info"
       end
       scope :groups do
-        post 'create', to: 'groups#create'
+        get "member_list", to: "groups#member_list"
+        get "info", to: "groups#info"
+        get "list", to: "groups#list"
+        get "user/gag_list", to: "groups#user_gag_list"
+        post "create", to: "groups#create"
+        post "join",  to: "groups#join"
+        post "sync", to: "groups#sync"
+        post "quit", to: "groups#quit"
+        post "dismiss", to: "groups#dismiss"
+        post "user/gag_add",to: "groups#user_gag_add"
+        post "user/gag_rollback",to: "groups#user_gag_rollback"
       end
     end
 
