@@ -3,7 +3,7 @@ include ActionController::Serialization
 
 protected
   def get_rongyun_token
-    result = RongCloud::Api.new.userGetToken {userId:current_user.id,name:current_user.name,portraitUri:""}
+    result = RongCloud::Api.new.userGetToken({userId:current_user.id,name:current_user.name,portraitUri:""})
     return result["token"]
   end
 
