@@ -72,7 +72,7 @@ export function RongIMClientSendMessage(){
   return function(dispatch,getState){
     const msn = RongIMClient.TextMessage.obtain("hello by gaogao");
     const conversationtype = RongIMClient.ConversationType.GROUP
-    const targetId = 1
+    const targetId = "18"
     RongIMClient.getInstance().sendMessage(conversationtype,targetId,msn,null,{
       onSuccess: function(){
         console.log("send success")
