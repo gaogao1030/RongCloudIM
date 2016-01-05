@@ -20,7 +20,8 @@ function setMyInfo(user){
     id: user.id,
     name: user.name,
     rongyun_app_key: user.rongyun_app_key,
-    rongyun_token: user.rongyun_token
+    rongyun_token: user.rongyun_token,
+    my_groups: user.groups
   }
 }
 

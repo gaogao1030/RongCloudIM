@@ -55,7 +55,6 @@ class Api::V1::UsersController < Api::BaseControllerController
     render json: {message: "登出成功"},status: 200
   end
 
-
   def info
     render json: current_user,serializer: UserSerializer,status: 200
   end

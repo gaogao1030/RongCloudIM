@@ -23,7 +23,8 @@ function my_info(state={},action){
       email: action.email,
       name: action.name,
       rongyun_token: action.rongyun_token,
-      rongyun_app_key: action.rongyun_app_key
+      rongyun_app_key: action.rongyun_app_key,
+      my_groups: action.my_groups
     }
   default:
     return state;
