@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 import thunk from 'redux-thunk';
 import ChatReducer from "../reducers/Chat";
 import Chat from '../containers/Chat';
+import DevTools from '../containers/DevTools';
 import configureStore from '../stores/configureChatStore.dev';
 
 
@@ -26,13 +27,16 @@ const store = configureStore({
 
 render(
   <Provider store={store}>
-    <Chat/>
+    <div>
+      <Chat />
+      <DevTools />
+    </div>
   </Provider>,
   document.getElementById("root")
 );
 
 
-if(process.env.NODE_ENV !== 'production') {
-  const showDevTools = require('../showDevTools').default;
-  showDevTools(store);
-}
+//if(process.env.NODE_ENV !== 'production') {
+//  const showDevTools = require('../showDevTools').default;
+//  showDevTools(store);
+//}
