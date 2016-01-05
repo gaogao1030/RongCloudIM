@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { ADD_MESSAGE, SET_MY_INFO } from "../constants/Chat";
+import { routeReducer } from 'redux-simple-router';
 
 function messages(state=[],action){
   switch (action.type){
@@ -32,7 +33,8 @@ function my_info(state={},action){
 
 const ChatReducer = combineReducers({
   messages,
-  my_info
+  my_info,
+  routing: routeReducer
 })
 
 export default ChatReducer

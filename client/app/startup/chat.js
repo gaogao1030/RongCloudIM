@@ -7,7 +7,9 @@ import ChatReducer from "../reducers/Chat";
 import Chat from '../containers/Chat';
 import DevTools from '../containers/DevTools';
 import configureStore from '../stores/configureChatStore.dev';
-
+import { Router, Route } from 'react-router';
+import { createHistory } from 'history';
+import { syncReduxAndRouter } from 'redux-simple-router';
 
 //const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 //const store = createStoreWithMiddleware(ChatReducer,{
@@ -25,10 +27,17 @@ const store = configureStore({
   }]
 })
 
+const history = createHistory()
+
+syncReduxAndRouter(history,store)
+
 render(
   <Provider store={store}>
     <div>
-      <Chat />
+      <Router history={history}>
+        <Route path="/chat" component ={Chat} >
+        </Route>
+      </Router>
       <DevTools />
     </div>
   </Provider>,
