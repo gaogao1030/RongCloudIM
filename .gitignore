@@ -15,6 +15,8 @@
 /log/*
 !/log/.keep
 /tmp
+/config/application.yml
+/client/webpack.config.js
 
 # Ignore application configuration
 /.byebug_history

@@ -41,7 +41,6 @@ export default class Chat extends Component {
     return (
       <div>
       <AppBar
-      style={{"position":"fixed"}}
       title="群组名字"
       iconElementLeft={<IconButton
         onClick={()=> dispatch(pushPath('/group'))}
