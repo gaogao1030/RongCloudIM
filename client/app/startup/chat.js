@@ -5,10 +5,11 @@ import { render } from 'react-dom';
 import thunk from 'redux-thunk';
 import ChatReducer from "../reducers/Chat";
 import Chat from '../containers/Chat';
+import Group from '../containers/Group';
 import DevTools from '../containers/DevTools';
 import configureStore from '../stores/configureChatStore.dev';
-import { Router, Route } from 'react-router';
 import { createHistory } from 'history';
+import { Router, Route } from 'react-router';
 import { syncReduxAndRouter } from 'redux-simple-router';
 
 //const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
@@ -35,8 +36,8 @@ render(
   <Provider store={store}>
     <div>
       <Router history={history}>
-        <Route path="/chat" component ={Chat} >
-        </Route>
+        <Route path="/group" component ={Group} />
+        <Route path="/chat" component ={Chat} />
       </Router>
       <DevTools />
     </div>

@@ -8,7 +8,8 @@
   position: absolute;
   overflow: auto;
   width:100%;
-  height:100%;
+  height:90%;
+  padding-top:60px;
 }
 
 body {
@@ -16,4 +17,9 @@ body {
   overflow: hidden;
   margin:0;
   padding:0;
+}
+
+html {
+  width: 100%;
+  height: 100%;
 }

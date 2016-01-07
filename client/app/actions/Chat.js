@@ -31,8 +31,12 @@ export function getMyInfo(){
     fetch("/api/v1/users/info",{credentials: 'include'})
       .then(response => response.json())
       .then((json) =>
-         dispatch(setMyInfo(json.user))
-      ).then(()=>
+        json.user
+      )
+      .then((user)=>
+         dispatch(setMyInfo(user))
+      )
+      .then(()=>
          resolve()
       )
     })

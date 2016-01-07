@@ -40,6 +40,7 @@ export default class ChatBox extends Component {
           hintText="输入要发送的信息"
           underlineStyle={{"borderColor": "#4caf50"}}
           fullWidth={true}
+          defaultValue=""
           onEnterKeyDown={(e)=>this.onEnterKeyDown(e)}
         />
         </div>

@@ -4,7 +4,7 @@ import MessageBox from "./MessageBox";
 
 export default class MessageListBox extends Component {
   render (){
-    const {messages } = this.props
+    const { messages } = this.props
     return (
       <List style={{"backgroundColor":"none","paddingBottom":"35px"}}>
       {messages.map((message,index)=>
