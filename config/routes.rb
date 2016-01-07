@@ -28,7 +28,11 @@ Rails.application.routes.draw do
   end
 
   resources :home, only: [:index]
-  resources :chat, only: [:index]
+
+  #---chat
+    resources :chat, only: [:index]
+    get 'group', to: "chat#index"
+  #chat---
 
   root :to => "home#index"
 
