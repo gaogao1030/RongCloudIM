@@ -28,6 +28,11 @@ class Api::V1::GroupsController < Api::BaseControllerController
     render json: @groups,each_serializer: GroupListSerializer, status: 200
   end
 
+  def my_list
+    @groups = current_user.groups
+    render json: @groups,each_serializer: GroupListSerializer, status: 200
+  end
+
   def create
     param! :name, String, required: true
     params[:creater_id] = current_user.id

@@ -4,30 +4,39 @@ import { connect } from 'redux-await';
 import GroupListBox from "../components/GroupListBox";
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
-import { getMyInfo } from '../actions/Chat';
+import { getMyInfo, getMyGroups,getFindGroups } from '../actions/Chat';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
 
 export default class Group extends Component {
   componentWillMount(){
-    const { dispatch } = this.props
-    //this.setState({MyInfoGot: true})
-    //dispatch(getMyInfo()).then(()=>
-    //  this.setState({MyInfoGot: false})
-    //)
-    dispatch(getMyInfo())
+    const { dispatch,statuses } = this.props
+    dispatch(getMyGroups())
+    dispatch(getFindGroups())
   }
 
   render (){
-    const {my_info} = this.props
+    const {my_info,statuses,errors} = this.props
+    const {my_groups} = my_info
+    const {find_groups} = my_info
     return (
       <Tabs>
         <Tab label="我加入的群组">
-          <p>my groups</p>
+          { statuses.my_groups === 'pending'&&
+            <p>请求pending中</p>
+          }
+          { statuses.my_groups === 'success'&&
+            <GroupListBox groups={my_groups} />
+          }
         </Tab>
         <Tab label="发现群组">
-          <p>find groups</p>
+          { statuses.find_groups === 'pending'&&
+            <p>请求pending中</p>
+          }
+          { statuses.find_groups === 'success'&&
+            <GroupListBox groups={find_groups} />
+          }
         </Tab>
       </Tabs>
 

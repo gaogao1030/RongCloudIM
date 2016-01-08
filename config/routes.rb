@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         get "member_list", to: "groups#member_list"
         get "info", to: "groups#info"
         get "list", to: "groups#list"
+        get "my_list", to: "groups#my_list"
         get "user/gag_list", to: "groups#user_gag_list"
         post "create", to: "groups#create"
         post "join",  to: "groups#join"

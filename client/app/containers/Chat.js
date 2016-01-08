@@ -32,12 +32,12 @@ export default class Chat extends Component {
 
   sendMessage(e,refs){
     const { dispatch,my_info } = this.props;
-    const { data } = my_info;
+    const { base_info } = my_info
     const { inputMessageRef } = refs;
     const content = inputMessageRef.getValue()
     RongIMClientSendMessage()
     if(String(content).replace(/^\s+/,'').replace(/\s+$/,'')!=""){
-      dispatch(addMessage("http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",data.name,content))
+      dispatch(addMessage("http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",base_info.name,content))
       inputMessageRef.clearValue()
     }
   }
