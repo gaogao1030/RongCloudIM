@@ -1,6 +1,8 @@
-import { ADD_MESSAGE, SET_MY_INFO } from "../constants/Chat"
-import ES6Promise,{Promise} from "es6-promise"
-import fetch from "isomorphic-fetch"
+import { ADD_MESSAGE, SET_MY_INFO } from "../constants/Chat";
+import ES6Promise,{Promise} from "es6-promise";
+import fetch from "isomorphic-fetch";
+import { AWAIT_MARKER } from 'redux-await'
+import { fetchMyInfo,RongIMClientConnect } from '../apis'
 
 ES6Promise.polyfill()
 
@@ -13,78 +15,20 @@ export function addMessage(avatar,name,content){
   }
 }
 
-function setMyInfo(user){
+export function getMyInfo(){
   return {
     type: SET_MY_INFO,
-    email: user.email,
-    id: user.id,
-    name: user.name,
-    rongyun_app_key: user.rongyun_app_key,
-    rongyun_token: user.rongyun_token,
-    my_groups: user.groups
+    AWAIT_MARKER,
+    payload:{
+      my_info: fetchMyInfo()
+    }
   }
 }
 
-export function getMyInfo(){
-  return function(dispatch,getState){
-    const promise = new Promise(function(resolve,reject){
-    fetch("/api/v1/users/info",{credentials: 'include'})
-      .then(response => response.json())
-      .then((json) =>
-        json.user
-      )
-      .then((user)=>
-         dispatch(setMyInfo(user))
-      )
-      .then(()=>
-         resolve()
-      )
-    })
-    return promise
-  }
-}
-
-export function RongIMClientConnect(){
-  return function(dispatch,getState){
-    const promise = new Promise(function(resolve,reject){
-      const me = getState().my_info
-      RongIMClient.init(me.rongyun_app_key)
-      RongIMClient.connect(me.rongyun_token,{
-        onSuccess: function(userId){
-          console.log("login with userId:"+ userId);
-          resolve();
-        },
-        onError: function (errorCode) {
-          console.log(errorCode);
-        }
-      })
-      RongIMClient.setConnectionStatusListener({
-        onChanged: function(status){
-          console.log(status);
-        }
-      })
-      RongIMClient.getInstance().setOnReceiveMessageListener({
-        onReceived: function(message) {
-          console.log(message);
-        }
-      })
-    })
-    return promise
-  }
-}
-
-export function RongIMClientSendMessage(){
-  return function(dispatch,getState){
-    const msn = RongIMClient.TextMessage.obtain("hello by gaogao");
-    const conversationtype = RongIMClient.ConversationType.GROUP
-    const targetId = "18"
-    RongIMClient.getInstance().sendMessage(conversationtype,targetId,msn,null,{
-      onSuccess: function(){
-        console.log("send success")
-      },
-      onError: function(errorCode){
-        console.log(errorCode)
-      }
-    })
+export function RongIMClientConnectByAction(){
+  return function(dispatch, getState){
+    console.log(getState())
+    const user = getState().my_info.data
+    RongIMClientConnect(user)
   }
 }

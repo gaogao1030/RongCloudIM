@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { ADD_MESSAGE, SET_MY_INFO } from "../constants/Chat";
 import { routeReducer } from 'redux-simple-router';
+import { reducer as awitReducer } from 'redux-await';
 
 function messages(state=[],action){
   switch (action.type){
@@ -15,16 +16,11 @@ function messages(state=[],action){
   }
 }
 
-function my_info(state={},action){
+function my_info(state={data:{}},action){
   switch (action.type){
   case SET_MY_INFO:
     return {
-      id: action.id,
-      email: action.email,
-      name: action.name,
-      rongyun_token: action.rongyun_token,
-      rongyun_app_key: action.rongyun_app_key,
-      my_groups: action.my_groups
+      data:action.payload.my_info
     }
   default:
     return state;
@@ -35,7 +31,8 @@ function my_info(state={},action){
 const ChatReducer = combineReducers({
   messages,
   my_info,
-  routing: routeReducer
+  routing: routeReducer,
+  await: awitReducer
 })
 
 export default ChatReducer

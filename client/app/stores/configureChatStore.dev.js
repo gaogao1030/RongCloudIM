@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState } from 'redux-devtools';
+import { middleware as awaitMiddleware } from 'redux-await';
 import ChatReducer from "../reducers/Chat";
 import DevTools from '../containers/DevTools';
 import thunk from 'redux-thunk';
 
 const finalCreateStore = compose(
-  applyMiddleware(thunk),
+  applyMiddleware(thunk,awaitMiddleware),
   DevTools.instrument(),
   persistState(getDebugSessionKey())
 )(createStore);
