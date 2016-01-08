@@ -14,7 +14,7 @@ export function fetchMyGroups(){
 
 export function fetchFindGroups(){
   const promise = new Promise(function(resolve,reject){
-    fetch("/api/v1/groups/list",{credentials: 'include'})
+    fetch("/api/v1/groups/find_list",{credentials: 'include'})
       .then(response => response.json())
       .then((json) =>
         json.groups

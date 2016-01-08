@@ -33,6 +33,13 @@ class Api::V1::GroupsController < Api::BaseControllerController
     render json: @groups,each_serializer: GroupListSerializer, status: 200
   end
 
+  def find_list
+    ids = current_user.groups.map{|g|g.id}
+    @gourps = Group.where.not(id:ids)
+    @groups = [] if @groups.nil?
+    render json: @groups,each_serializer: GroupListSerializer, status: 200
+  end
+
   def create
     param! :name, String, required: true
     params[:creater_id] = current_user.id

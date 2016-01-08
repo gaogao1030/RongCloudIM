@@ -29,6 +29,10 @@ export default class Group extends Component {
           { statuses.my_groups === 'success'&&
             <GroupListBox groups={my_groups} />
           }
+          {
+            my_groups.length === 0 &&
+            <p>没有群组</p>
+          }
         </Tab>
         <Tab label="发现群组">
           { statuses.find_groups === 'pending'&&
@@ -36,6 +40,10 @@ export default class Group extends Component {
           }
           { statuses.find_groups === 'success'&&
             <GroupListBox groups={find_groups} />
+          }
+          {
+            find_groups.length === 0 &&
+            <p>没有群组</p>
           }
         </Tab>
       </Tabs>
