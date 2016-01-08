@@ -16,6 +16,12 @@ export default class Group extends Component {
     dispatch(getFindGroups())
   }
 
+  onGroupBoxTouchTap(e,id){
+    console.log("touched")
+    console.log(e)
+    console.log(id)
+  }
+
   render (){
     const {my_info,statuses,errors} = this.props
     const {my_groups} = my_info
@@ -27,7 +33,9 @@ export default class Group extends Component {
             <p>请求pending中</p>
           }
           { statuses.my_groups === 'success'&&
-            <GroupListBox groups={my_groups} />
+            <GroupListBox groups={my_groups}
+              onGroupBoxTouchTap={(e,id) => this.onGroupBoxTouchTap(e,id)}
+            />
           }
           {
             my_groups.length === 0 &&
