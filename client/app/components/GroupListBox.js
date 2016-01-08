@@ -10,7 +10,7 @@ export default class GroupListBox extends Component {
       <div>
       <List style={{"paddingBottom":"0","paddingTop":"0"}}>
         {groups.map((group,index)=>
-          <GroupBox
+          <GroupBox {...group}
             key={index}
           />
         )}

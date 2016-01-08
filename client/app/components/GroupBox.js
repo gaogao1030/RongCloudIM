@@ -5,10 +5,11 @@ import Divider from 'material-ui/lib/divider';
 
 export default class GroupBox extends Component {
   render (){
+    const {name,creater_id,id} = this.props
     return (
       <div>
-        <ListItem value="1"
-          primaryText="群组名字"
+        <ListItem value={id}
+          primaryText={name}
           leftAvatar={<Avatar>G</Avatar>}
         />
         <Divider />
