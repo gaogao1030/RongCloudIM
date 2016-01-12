@@ -38,7 +38,7 @@ export default class Group extends Component {
             />
           }
           {
-            my_groups.length === 0 &&
+            statuses.my_groups === "failure" &&
             <p>没有群组</p>
           }
         </Tab>
@@ -50,7 +50,7 @@ export default class Group extends Component {
             <GroupListBox groups={find_groups} />
           }
           {
-            find_groups.length === 0 &&
+            statuses.find_groups === "failure" &&
             <p>没有群组</p>
           }
         </Tab>

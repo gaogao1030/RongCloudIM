@@ -36,8 +36,12 @@ class Api::V1::GroupsController < Api::BaseControllerController
   def find_list
     ids = current_user.groups.map{|g|g.id}
     @gourps = Group.where.not(id:ids)
-    @groups = [] if @groups.nil?
-    render json: @groups,each_serializer: GroupListSerializer, status: 200
+    if @groups.nil?
+      render json: {message: "没有发现群组"}, status: 404
+    else
+      render json: @groups,each_serializer: GroupListSerializer, status: 200
+    end
+
   end
 
   def create

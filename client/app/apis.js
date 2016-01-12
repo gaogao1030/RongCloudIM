@@ -1,12 +1,27 @@
+function checkStatus(response){
+ if (response.status >= 200 && response.status < 300) {
+   return response
+ } else {
+  const error = new Error(response.statusText)
+  error.response = response
+  throw error
+ }
+}
+
+function parseJson(response){
+  return response.json()
+}
+
 export function fetchMyGroups(){
   const promise = new Promise(function(resolve,reject){
     fetch("/api/v1/groups/my_list",{credentials: 'include'})
-      .then(response => response.json())
-      .then((json) =>
-        json.groups
+      .then(checkStatus)
+      .then(parseJson)
+      .then((data)=>
+        resolve(data.groups)
       )
-      .then((groups)=>
-         resolve(groups)
+      .catch((error)=>
+        reject(error)
       )
   })
   return promise
@@ -15,12 +30,13 @@ export function fetchMyGroups(){
 export function fetchFindGroups(){
   const promise = new Promise(function(resolve,reject){
     fetch("/api/v1/groups/find_list",{credentials: 'include'})
-      .then(response => response.json())
-      .then((json) =>
-        json.groups
+      .then(checkStatus)
+      .then(parseJson)
+      .then((data)=>
+         resolve(data.groups)
       )
-      .then((groups)=>
-         resolve(groups)
+      .catch((error)=>
+        reject(error)
       )
   })
   return promise
@@ -29,12 +45,12 @@ export function fetchFindGroups(){
 export function fetchMyInfo(){
   const promise = new Promise(function(resolve,reject){
   fetch("/api/v1/users/info",{credentials: 'include'})
-    .then(response => response.json())
-    .then((json) =>
-      json.user
-    )
-    .then((user)=>
-       resolve(user)
+    .then(checkStatus)
+    .then(parseJson)
+    .then((data)=>
+       resolve(data.user)
+    ).catch((error)=>
+      reject(error)
     )
   })
   return promise
