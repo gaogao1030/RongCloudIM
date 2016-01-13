@@ -27,6 +27,21 @@ export function fetchMyGroups(){
   return promise
 }
 
+export function fetchGroupInfo(id){
+  const promise = new Promise(function(resolve,reject){
+    fetch(`/api/v1/groups/info?id=${id}`,{credentials: 'include'})
+      .then(checkStatus)
+      .then(parseJson)
+      .then((data)=>
+        resolve(data.group)
+      )
+      .catch((error)=>
+        reject(error)
+      )
+  })
+  return promise
+}
+
 export function fetchFindGroups(){
   const promise = new Promise(function(resolve,reject){
     fetch("/api/v1/groups/find_list",{credentials: 'include'})
@@ -87,10 +102,10 @@ export function RongIMClientConnect(user){
   return promise
 }
 
-export function RongIMClientSendMessage(){
-  const msn = RongIMClient.TextMessage.obtain("hello by gaogao");
+export function RongIMClientSendGroupMessage(id,message){
+  const msn = RongIMClient.TextMessage.obtain(message);
   const conversationtype = RongIMClient.ConversationType.GROUP
-  const targetId = "18"
+  const targetId = String(id)
   RongIMClient.getInstance().sendMessage(conversationtype,targetId,msn,null,{
     onSuccess: function(){
       console.log("send success")

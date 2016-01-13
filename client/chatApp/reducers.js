@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_MESSAGE, SET_MY_INFO, SET_MY_GROUPS, SET_FIND_GROUPS } from "./constants.js";
+import { ADD_MESSAGE, SET_MY_INFO, SET_MY_GROUPS, SET_FIND_GROUPS, SET_GROUP_INFO } from "./constants.js";
 import { routeReducer } from 'redux-simple-router';
 import { reducer as awaitReducer } from 'redux-await';
 import { UPDATE_PATH } from 'redux-simple-router';
@@ -37,10 +37,21 @@ function my_info(state={base_info:{},my_groups:[],find_groups:[]},action){
   }
 }
 
+function group(state={base_info:{}},action){
+  switch (action.type){
+  case SET_GROUP_INFO:
+    return Object.assign({},state,{
+      base_info:action.payload.group_info
+    })
+  default:
+    return state;
+  }
+}
 
 const ChatReducer = combineReducers({
   messages,
   my_info,
+  group,
   routing: routeReducer,
   await: awaitReducer,
 })

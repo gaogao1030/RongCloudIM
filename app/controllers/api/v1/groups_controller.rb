@@ -122,8 +122,8 @@ class Api::V1::GroupsController < Api::BaseControllerController
   end
 
   def info
-    param! :group_id, String, required: true
-    group = Group.find_by(id: params[:group_id])
+    param! :id, String, required: true
+    group = Group.find_by(id: params[:id])
     if group.nil?
       render json: {message: "不存在改群组"}, status: 404
       return

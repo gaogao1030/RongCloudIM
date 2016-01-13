@@ -12,9 +12,11 @@ export default class MessageBox extends Component {
     return (
       <ListItem
         className="message"
+        disabled = {true}
+        style={{"display":"inline-block","maxWidth":"80%"}}
         leftAvatar={
           <Avatar
-            style={{"top":"20px"}}
+            style={{"top":"25px"}}
             src={avatar}
           />
         }

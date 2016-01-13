@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { ADD_MESSAGE, SET_MY_INFO } from "../constants.js";
 import { connect } from 'redux-await';
-import { addMessage, getMyInfo, RongIMClientConnectByAction } from '../actions';
+import { addMessage, getMyInfo, RongIMClientConnectByAction, getGroupInfo } from '../actions';
 import AppBar from "material-ui/lib/app-bar";
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconButton from 'material-ui/lib/icon-button';
 import ChatBox from "../components/ChatBox";
 import { Link } from 'react-router';
 import { pushPath } from 'redux-simple-router';
-import {fetchMyInfo,  RongIMClientSendMessage } from '../apis'
+import {fetchMyInfo,  RongIMClientSendGroupMessage } from '../apis'
 import "./Chat.scss";
 
 export default class Chat extends Component {
@@ -17,7 +17,8 @@ export default class Chat extends Component {
   }
 
   componentWillMount(){
-    const { dispatch } = this.props
+    const { dispatch,params } = this.props
+    dispatch(getGroupInfo(params.id))
     fetchMyInfo()
     .then((user) =>
       dispatch({type: SET_MY_INFO,payload: {my_info: user}})
@@ -31,26 +32,27 @@ export default class Chat extends Component {
   }
 
   sendMessage(e,refs){
-    const { dispatch,my_info } = this.props;
-    const { base_info } = my_info
+    const { dispatch,my_info,group } = this.props;
+    const { my_name } = my_info.base_info
+    const group_id = group.base_info.id
     const { inputMessageRef } = refs;
     const content = inputMessageRef.getValue()
-    RongIMClientSendMessage()
+    RongIMClientSendGroupMessage(group_id,content)
     if(String(content).replace(/^\s+/,'').replace(/\s+$/,'')!=""){
-      dispatch(addMessage("http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",base_info.name,content))
+      dispatch(addMessage("http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",my_name,content))
       inputMessageRef.clearValue()
     }
   }
 
-
   render (){
-    const { dispatch } = this.props
+    const { dispatch,group } = this.props
+    const { name } = group.base_info
     return (
       <div>
       <AppBar
-      title="群组名字"
+      title={name}
       iconElementLeft={<IconButton
-        onClick={()=> dispatch(pushPath('/group'))}
+        onClick={()=> dispatch(pushPath('/chat'))}
         ><NavigationClose /></IconButton>}
       />
       <ChatBox
@@ -65,7 +67,8 @@ export default class Chat extends Component {
 function select(state){
   return {
     messages: state.messages,
-    my_info: state.my_info
+    my_info: state.my_info,
+    group: state.group
   }
 }
 

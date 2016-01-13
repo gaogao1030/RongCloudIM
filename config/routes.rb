@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   #---chat
     resources :chat, only: [:index]
-    get 'group', to: "chat#index"
+    get 'chat/:id', to: "chat#index"
   #chat---
 
   root :to => "home#index"

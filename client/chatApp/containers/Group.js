@@ -6,7 +6,6 @@ import Tab from 'material-ui/lib/tabs/tab';
 import { getMyInfo, getMyGroups,getFindGroups } from '../actions';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { pushPath } from 'redux-simple-router';
-import { Link } from 'react-router';
 
 injectTapEventPlugin();
 
@@ -22,7 +21,7 @@ export default class Group extends Component {
     console.log("touched")
     console.log(e)
     console.log(id)
-    dispatch(pushPath("/chat/1"))
+    dispatch(pushPath(`/chat/${id}`))
   }
 
   render (){
@@ -32,7 +31,6 @@ export default class Group extends Component {
     return (
       <Tabs>
         <Tab label="我加入的群组">
-          <Link to='chat/1'>aaa</Link>
           { statuses.my_groups === 'pending'&&
             <p>请求pending中</p>
           }

@@ -1,8 +1,8 @@
-import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,SET_FIND_GROUPS } from "./constants.js";
+import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,SET_FIND_GROUPS,SET_GROUP_INFO } from "./constants.js";
 import ES6Promise,{Promise} from "es6-promise";
 import fetch from "isomorphic-fetch";
 import { AWAIT_MARKER } from 'redux-await'
-import { fetchMyInfo,RongIMClientConnect,fetchMyGroups,fetchFindGroups } from './apis'
+import { fetchMyInfo,RongIMClientConnect,fetchMyGroups,fetchFindGroups,fetchGroupInfo } from './apis'
 
 ES6Promise.polyfill()
 
@@ -21,6 +21,16 @@ export function getMyInfo(){
     AWAIT_MARKER,
     payload:{
       my_info: fetchMyInfo()
+    }
+  }
+}
+
+export function getGroupInfo(id){
+  return {
+    type: SET_GROUP_INFO,
+    AWAIT_MARKER,
+    payload:{
+      group_info: fetchGroupInfo(id)
     }
   }
 }
