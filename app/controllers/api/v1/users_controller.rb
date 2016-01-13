@@ -36,14 +36,14 @@ class Api::V1::UsersController < Api::BaseControllerController
 
     parameters = ActionController::Parameters.new(params)
     user = User.new parameters.permit(:email,:password,:name,:password_confirmation)
-    token = get_rongyun_token
-    if token.nil?
-      render json: {message: "得到融云token错误"}, status:403
-      return
-    end
-    user.rongyun_token = token
     if user.save
       sign_in(:user,user)
+      token = get_rongyun_token
+      if token.nil?
+        render json: {message: "得到融云token错误"}, status:403
+        return
+      end
+      user.update_attributes({rongyun_token: token})
       render json: current_user, serializer: UserSerializer, status: 200
     else
       render json: {message: user.errors.full_messages}, status: 400

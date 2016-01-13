@@ -102,6 +102,14 @@ export function RongIMClientConnect(user){
   return promise
 }
 
+export function RongImClientReceiveMessage(){
+  RongIMClient.getInstance().setOnReceiveMessageListener({
+    onReceived: function(message) {
+      console.log(message.getMessageType())
+    }
+  })
+}
+
 export function RongIMClientSendGroupMessage(id,message){
   const msn = RongIMClient.TextMessage.obtain(message);
   const conversationtype = RongIMClient.ConversationType.GROUP
