@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState } from 'redux-devtools';
 import { middleware as awaitMiddleware } from 'redux-await';
-import ChatReducer from "../reducers/Chat";
-import DevTools from '../containers/DevTools';
+import Reducer from "./reducers";
+import DevTools from '../DevTools';
 import thunk from 'redux-thunk';
 
 const finalCreateStore = compose(
@@ -17,10 +17,10 @@ function getDebugSessionKey(){
 }
 
 export default function configureStore(initialState) {
-  const store = finalCreateStore(ChatReducer, initialState);
+  const store = finalCreateStore(Reducer, initialState);
     if (module.hot) {
-      module.hot.accept('../reducers/Chat', () =>
-        store.replaceReducer(require('../reducers/Chat'))
+      module.hot.accept('./reducers', () =>
+        store.replaceReducer(require('./reducers'))
       );
     }
   return store;

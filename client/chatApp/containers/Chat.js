@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { ADD_MESSAGE, SET_MY_INFO } from "../constants/Chat";
+import { ADD_MESSAGE, SET_MY_INFO } from "../constants.js";
 import { connect } from 'redux-await';
-import { addMessage, getMyInfo, RongIMClientConnectByAction } from '../actions/Chat';
+import { addMessage, getMyInfo, RongIMClientConnectByAction } from '../actions';
 import AppBar from "material-ui/lib/app-bar";
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconButton from 'material-ui/lib/icon-button';

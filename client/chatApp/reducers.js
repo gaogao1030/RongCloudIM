@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_MESSAGE, SET_MY_INFO, SET_MY_GROUPS, SET_FIND_GROUPS } from "../constants/Chat";
+import { ADD_MESSAGE, SET_MY_INFO, SET_MY_GROUPS, SET_FIND_GROUPS } from "./constants.js";
 import { routeReducer } from 'redux-simple-router';
 import { reducer as awaitReducer } from 'redux-await';
 import { UPDATE_PATH } from 'redux-simple-router';

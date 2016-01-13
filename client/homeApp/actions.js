@@ -1,5 +1,5 @@
 import {ajax} from "jquery"
-import {SWITCH_COMPONENT,SIGN_IN_NOTICE,SIGN_UP_NOTICE} from '../constants/SignInOrUpPage'
+import {SWITCH_COMPONENT,SIGN_IN_NOTICE,SIGN_UP_NOTICE} from './constants'
 
 export function switchComponent(currentComponent) {
   return { type: SWITCH_COMPONENT,currentComponent }

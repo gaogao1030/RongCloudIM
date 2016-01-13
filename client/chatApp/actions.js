@@ -1,8 +1,8 @@
-import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,SET_FIND_GROUPS } from "../constants/Chat";
+import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,SET_FIND_GROUPS } from "./constants.js";
 import ES6Promise,{Promise} from "es6-promise";
 import fetch from "isomorphic-fetch";
 import { AWAIT_MARKER } from 'redux-await'
-import { fetchMyInfo,RongIMClientConnect,fetchMyGroups,fetchFindGroups } from '../apis'
+import { fetchMyInfo,RongIMClientConnect,fetchMyGroups,fetchFindGroups } from './apis'
 
 ES6Promise.polyfill()
 

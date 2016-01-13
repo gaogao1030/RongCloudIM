@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import SignInBox from "../components/SignInBox";
 import SignUpBox from "../components/SignUpBox";
-import { switchComponent, signIn, signUp,setSnackbarInfo } from "../actions/SignInOrUpPage";
-import {SWITCH_COMPONENT,SIGN_IN_NOTICE,SIGN_UP_NOTICE} from '../constants/SignInOrUpPage'
+import { switchComponent, signIn, signUp,setSnackbarInfo } from "../actions";
+import {SWITCH_COMPONENT,SIGN_IN_NOTICE,SIGN_UP_NOTICE} from '../constants'
 import './SignInOrUpPage.scss';
 
 export default class SignInOrUpPage extends Component {

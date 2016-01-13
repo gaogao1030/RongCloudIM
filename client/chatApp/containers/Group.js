@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-//import { connect } from 'react-redux';
 import { connect } from 'redux-await';
 import GroupListBox from "../components/GroupListBox";
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
-import { getMyInfo, getMyGroups,getFindGroups } from '../actions/Chat';
+import { getMyInfo, getMyGroups,getFindGroups } from '../actions';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { pushPath } from 'redux-simple-router';
+import { Link } from 'react-router';
 
 injectTapEventPlugin();
 
@@ -17,9 +18,11 @@ export default class Group extends Component {
   }
 
   onGroupBoxTouchTap(e,id){
+    const { dispatch,statuses } = this.props
     console.log("touched")
     console.log(e)
     console.log(id)
+    dispatch(pushPath("/chat/1"))
   }
 
   render (){
@@ -29,6 +32,7 @@ export default class Group extends Component {
     return (
       <Tabs>
         <Tab label="我加入的群组">
+          <Link to='chat/1'>aaa</Link>
           { statuses.my_groups === 'pending'&&
             <p>请求pending中</p>
           }
@@ -47,7 +51,7 @@ export default class Group extends Component {
             <p>请求pending中</p>
           }
           { statuses.find_groups === 'success'&&
-            <GroupListBox groups={find_groups} />
+            <GroupListBox groups={ find_groups } />
           }
           {
             statuses.find_groups === "failure" &&
