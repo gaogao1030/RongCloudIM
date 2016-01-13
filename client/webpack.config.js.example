@@ -1,16 +1,22 @@
 var path = require('path');
 var webpack = require('webpack');
-var host = "http://192.168.2.130:4000"
+var host = "http://gaoyh.corp.cimu.com:4000"
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    home:[
+    //home:[
+    //`webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
+    //'./app/startup/home.js'],
+    homeApp:[
     `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
-    './app/startup/home.js'],
-    chat: [
+    './homeApp/'],
+    //chat: [
+    //  `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
+    //  './chat.js'],
+    chatApp: [
       `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
-      './app/startup/chat.js'],
+      './chatApp/'],
   },
   output:  {
     path: path.join(__dirname,'../app/assets/webpack'),
