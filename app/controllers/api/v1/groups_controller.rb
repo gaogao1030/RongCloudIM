@@ -75,7 +75,7 @@ class Api::V1::GroupsController < Api::BaseControllerController
       return
     end
     if group.include_user? current_user.id
-      render json: {message: "已经加入该群组"}, status: 200
+      render json: {message: "已经加入该群组"}, status: 403
       return
     end
     if !group.add_user user_id: current_user.id

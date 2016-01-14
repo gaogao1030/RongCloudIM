@@ -8,6 +8,7 @@ import {
 getMyInfo, getMyGroups,getFindGroups,
 delFindGroup,addMyGroup,saveLastClickFindGroup
 } from '../actions';
+import { joinGroup } from "../apis"
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { pushPath } from 'redux-simple-router';
 
@@ -16,8 +17,17 @@ injectTapEventPlugin();
 export default class Group extends Component {
   handleDialogSubmit(e){
     const { dispatch,statuses,last_click_find_group } = this.props
-    dispatch(getMyGroups())
-    dispatch(getFindGroups())
+    const { id,index } = last_click_find_group.props
+    dispatch(delFindGroup(index))
+    joinGroup(id).
+    then(
+      function(data){
+        dispatch(pushPath(`/chat/${id}`))
+      },
+      function(err){
+        alert(err)
+      }
+    )
   }
 
   componentWillMount(){

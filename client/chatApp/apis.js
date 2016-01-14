@@ -71,6 +71,30 @@ export function fetchMyInfo(){
   return promise
 }
 
+export function joinGroup(id){
+  const promise = new Promise(function(resolve,reject){
+    fetch("/api/v1/groups/join",{
+      method: 'post',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        group_id: id
+      })
+    })
+    .then(checkStatus)
+    .then(parseJson)
+    .then((data)=>
+      resolve(data)
+    ).catch((error)=>
+      reject(error)
+    )
+  })
+  return promise
+}
+
 export function RongIMClientConnect(user){
   const promise = new Promise(function(resolve,reject){
     const me = user
