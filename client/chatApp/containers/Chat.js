@@ -32,9 +32,9 @@ export default class Chat extends Component {
   }
 
   sendMessage(e,refs){
-    const { dispatch,my_info,group } = this.props;
+    const { dispatch,my_info,group_info } = this.props;
     const { my_name } = my_info
-    const group_id = group.base_info.id
+    const group_id = group_info.id
     const { inputMessageRef } = refs;
     const content = inputMessageRef.getValue()
     RongIMClientSendGroupMessage(group_id,content)

@@ -4,7 +4,10 @@ import GroupListBox from "../components/GroupListBox";
 import HintDialog from "../components/HintDialog";
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
-import { getMyInfo, getMyGroups,getFindGroups,delFindGroup } from '../actions';
+import {
+getMyInfo, getMyGroups,getFindGroups,
+delFindGroup,addMyGroup,saveLastClickFindGroup
+} from '../actions';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { pushPath } from 'redux-simple-router';
 
@@ -12,8 +15,9 @@ injectTapEventPlugin();
 
 export default class Group extends Component {
   handleDialogSubmit(e){
-    const { dispatch,statuses } = this.props
-    dispatch(delFindGroup(0))
+    const { dispatch,statuses,last_click_find_group } = this.props
+    dispatch(getMyGroups())
+    dispatch(getFindGroups())
   }
 
   componentWillMount(){
@@ -31,8 +35,8 @@ export default class Group extends Component {
   onFindGroupBoxTouchTap(e,item){
     const { dispatch,statuses } = this.props
     const { joinGroupHintDialog } = this.refs
-    debugger
     joinGroupHintDialog.handleOpen()
+    dispatch(saveLastClickFindGroup(item))
   }
 
 
@@ -84,7 +88,8 @@ function select(state){
   return {
     my_info:state.my_info,
     my_groups:state.my_groups,
-    find_groups: state.find_groups
+    find_groups: state.find_groups,
+    last_click_find_group: state.last_click_find_group
   }
 }
 

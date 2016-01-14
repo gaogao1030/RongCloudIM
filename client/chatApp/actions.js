@@ -1,4 +1,8 @@
-import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,SET_FIND_GROUPS,SET_GROUP_INFO , ADD_GROUP, DEL_FIND_GROUP } from "./constants.js";
+import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,
+SET_FIND_GROUPS,SET_GROUP_INFO,
+ADD_FIND_GROUP,DEL_FIND_GROUP,
+ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP
+} from "./constants.js";
 import ES6Promise,{Promise} from "es6-promise";
 import fetch from "isomorphic-fetch";
 import { AWAIT_MARKER } from 'redux-await'
@@ -6,12 +10,12 @@ import { fetchMyInfo,RongIMClientConnect,fetchMyGroups,fetchFindGroups,fetchGrou
 
 ES6Promise.polyfill()
 
-export function addGroup(id,name,creater_id){
+export function addMyGroup(id,name,creater_id){
   return {
-    type: ADD_GROUP,
+    type: ADD_MY_GROUP,
     id,
     name,
-    creater_d
+    creater_id
   }
 }
 
@@ -68,6 +72,13 @@ export function getFindGroups(){
     payload:{
       find_groups: fetchFindGroups()
     }
+  }
+}
+
+export function saveLastClickFindGroup(find_group){
+  return {
+    type: SAVE_LAST_CLICK_FIND_GROUP,
+    last_click_find_group:find_group
   }
 }
 
