@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_MESSAGE, SET_MY_INFO, SET_MY_GROUPS, SET_FIND_GROUPS, SET_GROUP_INFO } from "./constants.js";
+import { ADD_MESSAGE, SET_MY_INFO, SET_MY_GROUPS, SET_FIND_GROUPS, SET_GROUP_INFO,DEL_FIND_GROUP } from "./constants.js";
 import { routeReducer } from 'redux-simple-router';
 import { reducer as awaitReducer } from 'redux-await';
 import { UPDATE_PATH } from 'redux-simple-router';
@@ -18,31 +18,42 @@ function messages(state=[],action){
   }
 }
 
-function my_info(state={base_info:{},my_groups:[],find_groups:[]},action){
+function my_groups(state=[],action){
   switch (action.type){
-  case SET_MY_INFO:
-    return Object.assign({},state,{
-      base_info:action.payload.my_info
-    })
   case SET_MY_GROUPS:
-    return Object.assign({},state,{
-      my_groups:action.payload.my_groups
-    })
-  case SET_FIND_GROUPS:
-    return Object.assign({},state,{
-      find_groups: action.payload.find_groups
-    })
+    return action.payload.my_groups
   default:
     return state;
   }
 }
 
-function group(state={base_info:{}},action){
+function find_groups(state=[],action){
+  switch (action.type){
+  case SET_FIND_GROUPS:
+    return action.payload.find_groups
+  default:
+    return state;
+  }
+}
+
+function my_info(state={},action){
+  switch (action.type){
+  case SET_MY_INFO:
+    return Object.assign({},
+      state,
+      action.payload.my_info
+    );
+  default:
+    return state;
+  }
+}
+
+function group_info(state={base_info:{}},action){
   switch (action.type){
   case SET_GROUP_INFO:
-    return Object.assign({},state,{
-      base_info:action.payload.group_info
-    })
+    return Object.assign({},state,
+      action.payload.group_info
+    )
   default:
     return state;
   }
@@ -51,7 +62,9 @@ function group(state={base_info:{}},action){
 const ChatReducer = combineReducers({
   messages,
   my_info,
-  group,
+  group_info,
+  my_groups,
+  find_groups,
   routing: routeReducer,
   await: awaitReducer,
 })

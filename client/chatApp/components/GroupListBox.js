@@ -12,6 +12,7 @@ export default class GroupListBox extends Component {
         {groups.map((group,index)=>
           <GroupBox {...group}
             key={index}
+            index = {index}
             onTouchTap= {onGroupBoxTouchTap}
           />
         )}

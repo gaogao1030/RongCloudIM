@@ -6,7 +6,7 @@ import Divider from 'material-ui/lib/divider';
 export default class GroupBox extends Component {
   handleOnTouchTap(e,id){
     const {onTouchTap} = this.props
-    onTouchTap(e,id)
+    onTouchTap(e,this)
   }
   render (){
     const {name,creater_id,id} = this.props
@@ -15,7 +15,7 @@ export default class GroupBox extends Component {
         <ListItem value={id}
           primaryText={name}
           leftAvatar={<Avatar>G</Avatar>}
-          onTouchTap={(e)=>this.handleOnTouchTap(e,id)}
+          onTouchTap={(e)=>this.handleOnTouchTap(e)}
         />
         <Divider />
       </div>

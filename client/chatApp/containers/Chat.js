@@ -33,7 +33,7 @@ export default class Chat extends Component {
 
   sendMessage(e,refs){
     const { dispatch,my_info,group } = this.props;
-    const { my_name } = my_info.base_info
+    const { my_name } = my_info
     const group_id = group.base_info.id
     const { inputMessageRef } = refs;
     const content = inputMessageRef.getValue()
@@ -45,8 +45,8 @@ export default class Chat extends Component {
   }
 
   render (){
-    const { dispatch,group } = this.props
-    const { name } = group.base_info
+    const { dispatch,group_info } = this.props
+    const { name } = group_info
     return (
       <div>
       <AppBar
@@ -68,7 +68,7 @@ function select(state){
   return {
     messages: state.messages,
     my_info: state.my_info,
-    group: state.group
+    group_info: state.group_info
   }
 }
 

@@ -1,10 +1,26 @@
-import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,SET_FIND_GROUPS,SET_GROUP_INFO } from "./constants.js";
+import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,SET_FIND_GROUPS,SET_GROUP_INFO , ADD_GROUP, DEL_FIND_GROUP } from "./constants.js";
 import ES6Promise,{Promise} from "es6-promise";
 import fetch from "isomorphic-fetch";
 import { AWAIT_MARKER } from 'redux-await'
 import { fetchMyInfo,RongIMClientConnect,fetchMyGroups,fetchFindGroups,fetchGroupInfo } from './apis'
 
 ES6Promise.polyfill()
+
+export function addGroup(id,name,creater_id){
+  return {
+    type: ADD_GROUP,
+    id,
+    name,
+    creater_d
+  }
+}
+
+export function delFindGroup(index){
+  return {
+    type:DEL_FIND_GROUP,
+    index
+  }
+}
 
 export function addMessage(avatar,name,content){
   return {
@@ -57,7 +73,7 @@ export function getFindGroups(){
 
 export function RongIMClientConnectByAction(){
   return function(dispatch, getState){
-    const user = getState().my_info.base_info
+    const user = getState().my_info
     RongIMClientConnect(user)
   }
 }

@@ -4,15 +4,16 @@ import GroupListBox from "../components/GroupListBox";
 import HintDialog from "../components/HintDialog";
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
-import { getMyInfo, getMyGroups,getFindGroups } from '../actions';
+import { getMyInfo, getMyGroups,getFindGroups,delFindGroup } from '../actions';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { pushPath } from 'redux-simple-router';
 
 injectTapEventPlugin();
 
 export default class Group extends Component {
-  joinGroup(e){
-    console.log("aa")
+  handleDialogSubmit(e){
+    const { dispatch,statuses } = this.props
+    dispatch(delFindGroup(0))
   }
 
   componentWillMount(){
@@ -21,22 +22,22 @@ export default class Group extends Component {
     dispatch(getFindGroups())
   }
 
-  onMyGroupBoxTouchTap(e,id){
+  onMyGroupBoxTouchTap(e,item){
     const { dispatch,statuses } = this.props
+    const { id } = item.props
     dispatch(pushPath(`/chat/${id}`))
   }
 
-  onFindGroupBoxTouchTap(e,id){
+  onFindGroupBoxTouchTap(e,item){
     const { dispatch,statuses } = this.props
     const { joinGroupHintDialog } = this.refs
+    debugger
     joinGroupHintDialog.handleOpen()
   }
 
 
   render (){
-    const {my_info,statuses,errors} = this.props
-    const {my_groups} = my_info
-    const {find_groups} = my_info
+    const {my_info,my_groups,find_groups,statuses,errors} = this.props
     return (
       <Tabs>
         <Tab label="我加入的群组">
@@ -69,7 +70,7 @@ export default class Group extends Component {
           <HintDialog
             ref="joinGroupHintDialog"
             title = "是否加入该群组"
-            handleSubmit={(e)=> this.joinGroup(e) }
+            handleSubmit={(e)=> this.handleDialogSubmit(e) }
           >
             <p>加入群组可以与该群组下的群组进行聊天</p>
           </HintDialog>
@@ -81,7 +82,9 @@ export default class Group extends Component {
 
 function select(state){
   return {
-    my_info:state.my_info
+    my_info:state.my_info,
+    my_groups:state.my_groups,
+    find_groups: state.find_groups
   }
 }
 

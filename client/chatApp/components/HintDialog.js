@@ -46,5 +46,4 @@ export default class HintDialog extends Component {
        </div>
      )
    }
-
 }
