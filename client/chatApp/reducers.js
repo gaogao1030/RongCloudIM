@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
-ADD_MESSAGE, SET_MY_INFO, SET_MY_GROUPS,
+ADD_SEND_MESSAGE, ADD_RECEIVE_MESSAGE,
+SET_MY_INFO, SET_MY_GROUPS,
 SET_FIND_GROUPS, SET_GROUP_INFO,
 DEL_FIND_GROUP,ADD_FIND_GROUP,
 ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
@@ -13,11 +14,19 @@ import { UPDATE_PATH } from 'redux-simple-router';
 
 function messages(state=[],action){
   switch (action.type){
-  case ADD_MESSAGE:
+  case ADD_SEND_MESSAGE:
     return [...state,{
       avatar: action.avatar,
       name: action.name,
-      content:action.content
+      content:action.content,
+      action_type: action.type
+    }];
+  case ADD_RECEIVE_MESSAGE:
+    return [...state,{
+      avatar: action.avatar,
+      name: action.name,
+      content:action.content,
+      action_type: action.type
     }];
   default:
     return state;

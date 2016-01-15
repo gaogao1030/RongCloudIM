@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { ADD_MESSAGE, SET_MY_INFO } from "../constants.js";
+import { SET_MY_INFO } from "../constants.js";
 import { connect } from 'redux-await';
 import {
-addMessage, getMyInfo, RongIMClientConnect,
+addSendMessage, getMyInfo, RongIMClientConnect,
 getGroupInfo, RongIMClientSendGroupMessage
 } from '../actions';
 import AppBar from "material-ui/lib/app-bar";
@@ -36,13 +36,13 @@ export default class Chat extends Component {
 
   sendMessage(e,refs){
     const { dispatch,my_info,group_info } = this.props;
-    const { name } = my_info
+    const { name,avatar } = my_info
     const group_id = group_info.id
     const { inputMessageRef } = refs;
     const content = inputMessageRef.getValue()
     dispatch(RongIMClientSendGroupMessage(group_id,content))
     if(String(content).replace(/^\s+/,'').replace(/\s+$/,'')!=""){
-      dispatch(addMessage("http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",name,content))
+      dispatch(addSendMessage(avatar,name,content))
       inputMessageRef.clearValue()
     }
   }

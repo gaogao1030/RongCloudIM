@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         post "sign_up", to: "users#sign_up"
         post "sign_out", to: "users#log_out"
         post "reset_rongyun_token", to: "users#reset_rongyun_token"
+        post "update", to: "users#update"
         get "info", to: "users#info"
       end
       scope :groups do

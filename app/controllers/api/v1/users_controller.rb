@@ -35,7 +35,7 @@ class Api::V1::UsersController < Api::BaseControllerController
     param! :password_confirmation, String, required: true
 
     parameters = ActionController::Parameters.new(params)
-    user = User.new parameters.permit(:email,:password,:name,:password_confirmation)
+    user = User.new parameters.permit(:email,:password,:name,:password_confirmation,:avatar)
     if user.save
       sign_in(:user,user)
       token = get_rongyun_token
@@ -47,6 +47,15 @@ class Api::V1::UsersController < Api::BaseControllerController
       render json: current_user, serializer: UserSerializer, status: 200
     else
       render json: {message: user.errors.full_messages}, status: 400
+    end
+  end
+
+  def update
+    parameters = ActionController::Parameters.new(params)
+    if current_user.update_attributes(parameters.permit(:name,:avatar))
+      render json: current_user, serializer: UserSerializer, status: 200
+    else
+      render json: {message: current_user.errors.full_messages}, status: 400
     end
   end
 

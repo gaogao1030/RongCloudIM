@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231075603) do
+ActiveRecord::Schema.define(version: 20160115063054) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "creater_id", limit: 255
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "avatar",     limit: 255
   end
 
   create_table "user_groups", force: :cascade do |t|
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(version: 20151231075603) do
     t.datetime "updated_at"
     t.string   "name",                   limit: 255
     t.string   "rongyun_token",          limit: 255
+    t.string   "avatar",                 limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

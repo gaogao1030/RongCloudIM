@@ -1,4 +1,4 @@
-import { ADD_MESSAGE, SET_MY_INFO,SET_MY_GROUPS,
+import { ADD_SEND_MESSAGE, ADD_RECEIVE_MESSAGE ,SET_MY_INFO,SET_MY_GROUPS,
 SET_FIND_GROUPS,SET_GROUP_INFO,
 ADD_FIND_GROUP,DEL_FIND_GROUP,
 ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
@@ -27,9 +27,18 @@ export function delFindGroup(index){
   }
 }
 
-export function addMessage(avatar,name,content){
+export function addSendMessage(avatar,name,content){
   return {
-    type:ADD_MESSAGE,
+    type:ADD_SEND_MESSAGE,
+    avatar:avatar,
+    name:name,
+    content:content
+  }
+}
+
+export function addReceiveMessage(avatar,name,content){
+  return {
+    type:ADD_RECEIVE_MESSAGE,
     avatar:avatar,
     name:name,
     content:content
@@ -116,8 +125,8 @@ export function RongIMClientConnect(){
               }
             }
             )[0]
-            const {email,name} = sender
-            dispatch(addMessage("http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",name,content))
+            const {email,name,avatar} = sender
+            dispatch(addReceiveMessage(avatar,name,content))
           }
         })
         }else{

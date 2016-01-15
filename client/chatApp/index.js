@@ -11,12 +11,14 @@ import configureStore from './configureChatStore.dev';
 import { createHistory } from 'history';
 import { Router, Route, IndexRoute } from 'react-router';
 import { syncReduxAndRouter } from 'redux-simple-router';
+import { ADD_RECEIVE_MESSAGE } from "./constants.js";
 
 const store = configureStore({
   messages:[{
     avatar:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",
-    name:"gaogao",
-    content:"hello redux and react"
+    name:"System",
+    content:"欢迎来到聊天室",
+    action_type: ADD_RECEIVE_MESSAGE
   }]
 })
 

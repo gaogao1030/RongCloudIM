@@ -17,6 +17,7 @@
 #  updated_at             :datetime
 #  name                   :string(255)
 #  rongyun_token          :string(255)
+#  avatar                 :string(255)
 #
 # Indexes
 #
@@ -35,6 +36,10 @@ class User < ActiveRecord::Base
 
   def rongyun_app_key
     ENV["RongCloudAppKey"]
+  end
+
+  def avatar
+    self.read_attribute("avatar") || "http://img.sobot.com/chatres/5190/logo/907c9f8d814e43d09db1581ef6a0672d.jpg"
   end
 
 end
