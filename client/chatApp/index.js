@@ -15,7 +15,7 @@ import { ADD_RECEIVE_MESSAGE } from "./constants.js";
 
 const store = configureStore({
   messages:[{
-    avatar:"http://7xjz3m.com1.z0.glb.clouddn.com/avatar%2Fgaogao.jpg",
+    avatar:"https://s-media-cache-ak0.pinimg.com/avatars/KittenMonster44_1444512332_30.jpg",
     name:"System",
     content:"欢迎来到聊天室",
     action_type: ADD_RECEIVE_MESSAGE

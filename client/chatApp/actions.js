@@ -153,6 +153,42 @@ export function RongIMClientSendGroupMessage(id,message){
   }
 }
 
+export function getRongIMGroupHistoryMessages(id){
+  return function(dispatch, getState){
+    const promise = new Promise(function(resolve,reject){
+      const conversationtype = RongIMClient.ConversationType.GROUP
+      const targetId = String(id)
+      RongIMClient.getInstance().getHistoryMessages(conversationtype,targetId,20,{
+        onSuccess: function(hasHistoryMessage,historyMessages){
+        const me = getState().my_info
+        const members = getState().group_info.members
+          for(let message of historyMessages){
+            let sender_id = String(message.getSenderUserId())
+            let sender = members.filter(
+              function(m){
+                if(m.id == sender_id){
+                  return m
+                }
+              }
+            )[0]
+            let { avatar,name } = sender
+            let content = message.getContent()
+            if(sender.id == me.id){
+              dispatch(addSendMessage(avatar,name,content))
+            } else {
+              dispatch(addReceiveMessage(avatar,name,content))
+            }
+          }
+        },
+        onError: function(){
+
+        }
+      })
+    })
+    return promise
+  }
+}
+
 export function getRongIMClientInstance(instance){
   return {
     type: SET_RONG_IM_CLIENT_INSTANCE,
