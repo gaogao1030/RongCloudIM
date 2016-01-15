@@ -3,7 +3,8 @@ import {
 ADD_MESSAGE, SET_MY_INFO, SET_MY_GROUPS,
 SET_FIND_GROUPS, SET_GROUP_INFO,
 DEL_FIND_GROUP,ADD_FIND_GROUP,
-ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP
+ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
+SET_RONG_IM_CLIENT_INSTANCE
 } from "./constants.js";
 import { routeReducer } from 'redux-simple-router';
 import { reducer as awaitReducer } from 'redux-await';
@@ -90,7 +91,7 @@ function my_info(state={},action){
   }
 }
 
-function group_info(state={base_info:{}},action){
+function group_info(state={},action){
   switch (action.type){
   case SET_GROUP_INFO:
     return Object.assign({},
@@ -102,12 +103,22 @@ function group_info(state={base_info:{}},action){
   }
 }
 
+function rong_im_client_instance(state={},action){
+  switch (action.type){
+  case SET_RONG_IM_CLIENT_INSTANCE:
+    return Object.assign({},action.rong_im_client_instance)
+  default:
+    return state;
+  }
+}
+
 const ChatReducer = combineReducers({
   messages,
   my_info,
   group_info,
   my_groups,
   find_groups,
+  rong_im_client_instance,
   last_click_find_group,
   routing: routeReducer,
   await: awaitReducer,
