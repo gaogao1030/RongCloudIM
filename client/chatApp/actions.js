@@ -3,7 +3,8 @@ SET_FIND_GROUPS,SET_GROUP_INFO,
 ADD_FIND_GROUP,DEL_FIND_GROUP,
 ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
 SET_RONG_IM_CLIENT_INSTANCE,ADD_HISTORY_SEND_MESSAGE,
-ADD_HISTORY_RECEIVE_MESSAGE
+ADD_HISTORY_RECEIVE_MESSAGE,SET_FETCH_HISTORY_MESSAGE_STATE,
+SET_LOADING_STATE
 } from "./constants.js";
 import ES6Promise,{Promise} from "es6-promise";
 import fetch from "isomorphic-fetch";
@@ -104,6 +105,20 @@ export function getFindGroups(){
   }
 }
 
+export function setLoadingState(state){
+  return {
+    type: SET_LOADING_STATE,
+    state: state
+  }
+}
+
+export function setFetchHistoryMessageState(availability){
+  return {
+    type: SET_FETCH_HISTORY_MESSAGE_STATE,
+    availability:availability
+  }
+}
+
 export function saveLastClickFindGroup(find_group){
   return {
     type: SAVE_LAST_CLICK_FIND_GROUP,
@@ -156,6 +171,8 @@ export function RongIMClientConnect(){
   }
 }
 
+
+
 export function RongIMClientSendGroupMessage(id,message){
   return function(dispatch,getState){
     const msn = RongIMClient.TextMessage.obtain(message);
@@ -177,30 +194,34 @@ export function getRongIMGroupHistoryMessages(id){
     const promise = new Promise(function(resolve,reject){
       const conversationtype = RongIMClient.ConversationType.GROUP
       const targetId = String(id)
+      dispatch(setLoadingState({fetchHistoryMessageState:true}))
       RongIMClient.getInstance().getHistoryMessages(conversationtype,targetId,20,{
         onSuccess: function(hasHistoryMessage,historyMessages){
-        const me = getState().my_info
-        const members = getState().group_info.members
-          for(let message of historyMessages){
-            let sender_id = String(message.getSenderUserId())
-            let sender = members.filter(
-              function(m){
-                if(m.id == sender_id){
-                  return m
+          dispatch(setLoadingState({fetchHistoryMessageState:false}))
+          historyMessages = historyMessages.reverse()
+          const me = getState().my_info
+          const members = getState().group_info.members
+            for(let message of historyMessages){
+              let sender_id = String(message.getSenderUserId())
+              let sender = members.filter(
+                function(m){
+                  if(m.id == sender_id){
+                    return m
+                  }
                 }
+              )[0]
+              let { avatar,name } = sender
+              let content = message.getContent()
+              if(sender.id == me.id){
+                dispatch(addHistorySendMessage(avatar,name,content))
+              } else {
+                dispatch(addHistoryReceiveMessage(avatar,name,content))
               }
-            )[0]
-            let { avatar,name } = sender
-            let content = message.getContent()
-            if(sender.id == me.id){
-              dispatch(addHistorySendMessage(avatar,name,content))
-            } else {
-              dispatch(addHistoryReceiveMessage(avatar,name,content))
             }
-          }
-        },
+            resolve()
+          },
         onError: function(){
-
+          reject()
         }
       })
     })

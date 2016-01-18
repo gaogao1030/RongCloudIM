@@ -3,12 +3,14 @@ import { SET_MY_INFO } from "../constants.js";
 import { connect } from 'redux-await';
 import {
 addSendMessage, getMyInfo, RongIMClientConnect,
-getGroupInfo, RongIMClientSendGroupMessage,getRongIMGroupHistoryMessages
+getGroupInfo, RongIMClientSendGroupMessage,getRongIMGroupHistoryMessages,
+setFetchHistoryMessageState,setLoadingState
 } from '../actions';
 import AppBar from "material-ui/lib/app-bar";
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconButton from 'material-ui/lib/icon-button';
 import FlatButton from 'material-ui/lib/flat-button';
+import CircularProgress from 'material-ui/lib/circular-progress';
 import ChatBox from "../components/ChatBox";
 import { Link } from 'react-router';
 import { pushPath } from 'redux-simple-router';
@@ -23,6 +25,7 @@ export default class Chat extends Component {
   componentWillMount(){
     const { dispatch,params } = this.props
     dispatch(getGroupInfo(params.id))
+    dispatch(setLoadingState({fetchHistoryMessageState:true}))
     fetchMyInfo()
     .then((user) =>
       dispatch({type: SET_MY_INFO,payload: {my_info: user}})
@@ -30,10 +33,10 @@ export default class Chat extends Component {
     .then(()=>
       dispatch(RongIMClientConnect())
      )
-    .then(()=>
+    .then(function(){
       //dispatch(getRongIMGroupHistoryMessages(params.id))
-      console.log("can able fetch histroy")
-    )
+      dispatch(setLoadingState({fetchHistoryMessageState:false}))
+    })
   }
 
   componentDidUpdate(){
@@ -52,8 +55,14 @@ export default class Chat extends Component {
     }
   }
 
+  fetchHistoryMessage(e){
+    const { dispatch,params} = this.props
+    dispatch(setFetchHistoryMessageState(false))
+    dispatch(getRongIMGroupHistoryMessages(params.id))
+  }
+
   render (){
-    const { dispatch,group_info } = this.props
+    const { dispatch,group_info,fetchHistoryMessageState,loadingState } = this.props
     const { name } = group_info
     return (
       <div>
@@ -63,10 +72,21 @@ export default class Chat extends Component {
         onClick={()=> dispatch(pushPath('/chat'))}
         ><NavigationClose /></IconButton>}
       />
-      <FlatButton label="更多历史聊天记录"
-      primary={true}
-      style={{"width":"100%"}}
-      onTouchTap={this.fetchHistoyMessage}/>
+      { fetchHistoryMessageState.availability &&
+        !loadingState.fetchHistoryMessageState &&
+          <FlatButton label="更多历史聊天记录"
+          primary={true}
+          style={{"width":"100%"}}
+          onTouchTap={(e) => this.fetchHistoryMessage(e)}/>
+      }
+      { loadingState.fetchHistoryMessageState &&
+        <CircularProgress model="indeterminate"
+          style={
+            {"margin":"0 auto 10px auto","display":"block"}
+          }
+          size={0.3}
+        />
+      }
       <ChatBox
         messages={this.props.messages}
         sendMessage={(e,refs) => this.sendMessage(e,refs)}
@@ -81,7 +101,9 @@ function select(state){
     messages: state.messages,
     my_info: state.my_info,
     group_info: state.group_info,
-    rong_im_client_instance: state.rong_im_client_instance
+    rong_im_client_instance: state.rong_im_client_instance,
+    fetchHistoryMessageState: state.fetchHistoryMessageState,
+    loadingState: state.loadingState
   }
 }
 
