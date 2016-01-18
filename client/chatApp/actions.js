@@ -2,7 +2,8 @@ import { ADD_SEND_MESSAGE, ADD_RECEIVE_MESSAGE ,SET_MY_INFO,SET_MY_GROUPS,
 SET_FIND_GROUPS,SET_GROUP_INFO,
 ADD_FIND_GROUP,DEL_FIND_GROUP,
 ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
-SET_RONG_IM_CLIENT_INSTANCE
+SET_RONG_IM_CLIENT_INSTANCE,ADD_HISTORY_SEND_MESSAGE,
+ADD_HISTORY_RECEIVE_MESSAGE
 } from "./constants.js";
 import ES6Promise,{Promise} from "es6-promise";
 import fetch from "isomorphic-fetch";
@@ -24,6 +25,24 @@ export function delFindGroup(index){
   return {
     type:DEL_FIND_GROUP,
     index
+  }
+}
+
+export function addHistorySendMessage(avatar,name,content){
+  return {
+    type:ADD_HISTORY_SEND_MESSAGE,
+    avatar:avatar,
+    name:name,
+    content:content
+  }
+}
+
+export function addHistoryReceiveMessage(avatar,name,content){
+  return {
+    type:ADD_HISTORY_RECEIVE_MESSAGE,
+    avatar:avatar,
+    name:name,
+    content:content
   }
 }
 
@@ -174,9 +193,9 @@ export function getRongIMGroupHistoryMessages(id){
             let { avatar,name } = sender
             let content = message.getContent()
             if(sender.id == me.id){
-              dispatch(addSendMessage(avatar,name,content))
+              dispatch(addHistorySendMessage(avatar,name,content))
             } else {
-              dispatch(addReceiveMessage(avatar,name,content))
+              dispatch(addHistoryReceiveMessage(avatar,name,content))
             }
           }
         },

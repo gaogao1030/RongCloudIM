@@ -8,6 +8,7 @@ getGroupInfo, RongIMClientSendGroupMessage,getRongIMGroupHistoryMessages
 import AppBar from "material-ui/lib/app-bar";
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconButton from 'material-ui/lib/icon-button';
+import FlatButton from 'material-ui/lib/flat-button';
 import ChatBox from "../components/ChatBox";
 import { Link } from 'react-router';
 import { pushPath } from 'redux-simple-router';
@@ -30,7 +31,8 @@ export default class Chat extends Component {
       dispatch(RongIMClientConnect())
      )
     .then(()=>
-      dispatch(getRongIMGroupHistoryMessages(params.id))
+      //dispatch(getRongIMGroupHistoryMessages(params.id))
+      console.log("can able fetch histroy")
     )
   }
 
@@ -61,6 +63,10 @@ export default class Chat extends Component {
         onClick={()=> dispatch(pushPath('/chat'))}
         ><NavigationClose /></IconButton>}
       />
+      <FlatButton label="更多历史聊天记录"
+      primary={true}
+      style={{"width":"100%"}}
+      onTouchTap={this.fetchHistoyMessage}/>
       <ChatBox
         messages={this.props.messages}
         sendMessage={(e,refs) => this.sendMessage(e,refs)}

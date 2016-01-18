@@ -17,7 +17,7 @@ const store = configureStore({
   messages:[{
     avatar:"https://s-media-cache-ak0.pinimg.com/avatars/KittenMonster44_1444512332_30.jpg",
     name:"System",
-    content:"欢迎来到聊天室",
+    content:"お帰りなさいませ、ご主人様",
     action_type: ADD_RECEIVE_MESSAGE
   }]
 })
