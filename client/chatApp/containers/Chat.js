@@ -8,6 +8,7 @@ setFetchHistoryMessageState,setLoadingState
 } from '../actions';
 import AppBar from "material-ui/lib/app-bar";
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
+import SocialGroup from 'material-ui/lib/svg-icons/social/group';
 import IconButton from 'material-ui/lib/icon-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import CircularProgress from 'material-ui/lib/circular-progress';
@@ -62,15 +63,26 @@ export default class Chat extends Component {
   }
 
   render (){
-    const { dispatch,group_info,fetchHistoryMessageState,loadingState } = this.props
+    const { dispatch,group_info,fetchHistoryMessageState,loadingState,params } = this.props
     const { name } = group_info
     return (
       <div>
       <AppBar
       title={name}
-      iconElementLeft={<IconButton
-        onClick={()=> dispatch(pushPath('/chat'))}
-        ><NavigationClose /></IconButton>}
+      iconElementLeft={
+        <IconButton
+          onClick={()=> dispatch(pushPath('/chat'))}
+        >
+          <NavigationClose />
+        </IconButton>
+      }
+      iconElementRight={
+        <IconButton
+          onClick={()=> dispatch(pushPath(`/chat/${params.id}/members`))}
+        >
+          <SocialGroup />
+        </IconButton>
+      }
       />
       { fetchHistoryMessageState.availability &&
         !loadingState.fetchHistoryMessageState &&

@@ -3,9 +3,10 @@ import { createStore,applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { render } from 'react-dom';
 import thunk from 'redux-thunk';
-import App from './containers/app';
+import App from './containers/App';
 import Chat from './containers/Chat';
 import Group from './containers/Group';
+import MemberList from './containers/MemberList';
 import DevTools from '../DevTools';
 import configureStore from './configureChatStore.dev';
 import { createHistory } from 'history';
@@ -30,9 +31,10 @@ render(
   <Provider store={store}>
     <div>
       <Router history={history}>
-        <Route path="/chat" component ={App} >
-          <IndexRoute component ={Group} />
-          <Route path=":id" component ={Chat} />
+        <Route path="/chat" component={App} >
+          <IndexRoute component={Group} />
+          <Route path=":id" component={Chat} />
+          <Route path=":id/members" component={MemberList}/>
         </Route>
       </Router>
       <DevTools />
