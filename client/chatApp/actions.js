@@ -4,7 +4,7 @@ ADD_FIND_GROUP,DEL_FIND_GROUP,
 ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
 SET_RONG_IM_CLIENT_INSTANCE,ADD_HISTORY_SEND_MESSAGE,
 ADD_HISTORY_RECEIVE_MESSAGE,SET_FETCH_HISTORY_MESSAGE_STATE,
-SET_LOADING_STATE
+SET_LOADING_STATE,ADD_HISTORY_MESSAGES
 } from "./constants.js";
 import ES6Promise,{Promise} from "es6-promise";
 import fetch from "isomorphic-fetch";
@@ -44,6 +44,13 @@ export function addHistoryReceiveMessage(avatar,name,content){
     avatar:avatar,
     name:name,
     content:content
+  }
+}
+
+export function addHistoryMessages(historyMessages){
+  return {
+    type: ADD_HISTORY_MESSAGES,
+    historyMessages: historyMessages
   }
 }
 
@@ -197,10 +204,9 @@ export function getRongIMGroupHistoryMessages(id){
       dispatch(setLoadingState({fetchHistoryMessageState:true}))
       RongIMClient.getInstance().getHistoryMessages(conversationtype,targetId,20,{
         onSuccess: function(hasHistoryMessage,historyMessages){
-          dispatch(setLoadingState({fetchHistoryMessageState:false}))
-          historyMessages = historyMessages.reverse()
           const me = getState().my_info
           const members = getState().group_info.members
+          let addHistoryMessageList=[]
             for(let message of historyMessages){
               let sender_id = String(message.getSenderUserId())
               let sender = members.filter(
@@ -213,11 +219,23 @@ export function getRongIMGroupHistoryMessages(id){
               let { avatar,name } = sender
               let content = message.getContent()
               if(sender.id == me.id){
-                dispatch(addHistorySendMessage(avatar,name,content))
+                addHistoryMessageList.push({
+                  avatar: avatar,
+                  name: name,
+                  content: content,
+                  action_type: ADD_HISTORY_SEND_MESSAGE
+                })
               } else {
-                dispatch(addHistoryReceiveMessage(avatar,name,content))
+                addHistoryMessageList.push({
+                  avatar: avatar,
+                  name: name,
+                  content: content,
+                  action_type: ADD_HISTORY_RECEIVE_MESSAGE
+                })
               }
             }
+            dispatch(addHistoryMessages(addHistoryMessageList))
+            dispatch(setLoadingState({fetchHistoryMessageState:false}))
             resolve()
           },
         onError: function(){

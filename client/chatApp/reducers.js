@@ -7,7 +7,7 @@ DEL_FIND_GROUP,ADD_FIND_GROUP,
 ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
 SET_RONG_IM_CLIENT_INSTANCE,ADD_HISTORY_SEND_MESSAGE,
 ADD_HISTORY_RECEIVE_MESSAGE,SET_FETCH_HISTORY_MESSAGE_STATE,
-SET_LOADING_STATE
+SET_LOADING_STATE,ADD_HISTORY_MESSAGES
 } from "./constants.js";
 import { routeReducer } from 'redux-simple-router';
 import { reducer as awaitReducer } from 'redux-await';
@@ -61,6 +61,8 @@ function messages(state=[],action){
       content:action.content,
       action_type: action.type
     },...state];
+  case ADD_HISTORY_MESSAGES:
+    return [...action.historyMessages,...state]
   default:
     return state;
   }
