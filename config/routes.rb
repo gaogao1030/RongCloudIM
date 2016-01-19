@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       end
       scope :groups do
         get "member_list", to: "groups#member_list"
+        get "member_info", to: "groups#member_info"
         get "info", to: "groups#info"
         get "list", to: "groups#list"
         get "find_list", to: "groups#find_list"

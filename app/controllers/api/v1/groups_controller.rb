@@ -88,6 +88,7 @@ class Api::V1::GroupsController < Api::BaseControllerController
     end
   end
 
+
   def quit
     param! :group_id, String, required: true
     group = Group.find_by(id: params[:group_id])
@@ -96,7 +97,7 @@ class Api::V1::GroupsController < Api::BaseControllerController
       return
     end
     if !group.remove_user(current_user.id)
-      render json: {message: "移除成员失败"}, status: 400
+      render json: {message: "退出群组失败"}, status: 400
       return
     end
     result = RongCloud::Api.new.groupQuit({groupId: group.id,userId: current_user.id})
@@ -150,6 +151,22 @@ class Api::V1::GroupsController < Api::BaseControllerController
     if result.parsed_response["code"] == 200
       render json: {members: result.parsed_response["users"]}
     end
+  end
+
+  def member_info
+    param! :group_id, String, required: true
+    param! :user_id, String, required: true
+    group = Group.find_by(id: params[:group_id])
+    if group.nil?
+      render json: {message: "不存在改群组"}, status: 404
+      return
+    end
+    member = group.members.find_by(id: params[:user_id])
+    if member.nil?
+      render json: {message: "不存在该成员"}, status: 404
+      return
+    end
+    render json: member,serializer: UserSerializer, status:200
   end
 
   def refresh
