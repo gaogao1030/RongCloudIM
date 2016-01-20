@@ -35,8 +35,9 @@ Rails.application.routes.draw do
 
   #---chat
     resources :chat, only: [:index]
-    get 'chat/:id', to: "chat#index"
-    get 'chat/:id/members', to: "chat#index"
+    get 'chat/:group_id', to: "chat#index"
+    get 'chat/:group_id/members', to: "chat#index"
+    get 'chat/:group_id/members/:member_id', to: "chat#index"
   #chat---
 
   root :to => "home#index"

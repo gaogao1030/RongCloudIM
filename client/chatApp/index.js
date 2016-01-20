@@ -7,6 +7,7 @@ import App from './containers/App';
 import Chat from './containers/Chat';
 import Group from './containers/Group';
 import MemberList from './containers/MemberList';
+import MemberInfo from './containers/MemberInfo';
 import DevTools from '../DevTools';
 import configureStore from './configureChatStore.dev';
 import { createHistory } from 'history';
@@ -33,8 +34,9 @@ render(
       <Router history={history}>
         <Route path="/chat" component={App} >
           <IndexRoute component={Group} />
-          <Route path=":id" component={Chat} />
-          <Route path=":id/members" component={MemberList}/>
+          <Route path=":group_id" component={Chat} />
+          <Route path=":group_id/members" component={MemberList}/>
+          <Route path=":group_id/members/:member_id" component={MemberInfo}/>
         </Route>
       </Router>
       <DevTools />

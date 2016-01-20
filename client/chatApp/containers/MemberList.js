@@ -9,20 +9,18 @@ import {
 getGroupInfo,getMyInfo
 } from '../actions';
 
-const owner_condition = function(){
-
-}
-
 export default class MemberList extends Component {
   componentWillMount(){
-    const {dispatch,params} = this.props
-    dispatch(getGroupInfo(params.id))
+    const { dispatch,params } = this.props
+    const { group_id } = params
+    dispatch(getGroupInfo(group_id))
     dispatch(getMyInfo())
   }
 
   render() {
     const { params,dispatch,group_info,statuses,my_info } = this.props
     const { members,name,creater_id } = group_info
+    const { group_id } = params
     return (
       <div>
         <AppBar
@@ -33,7 +31,7 @@ export default class MemberList extends Component {
           iconElementLeft={
             <IconButton
               onTouchTap={(e)=>
-                dispatch(pushPath(`/chat/${params.id}`))
+                dispatch(pushPath(`/chat/${group_id}`))
               }
             >
               <HardwareKeyboardBackspace />
@@ -47,6 +45,9 @@ export default class MemberList extends Component {
           <MemberListBox members={ members }
             my_info={ my_info }
             group_info={ group_info }
+            handleTouchTap={ (e,group_id,member_id) =>
+              dispatch(pushPath(`/chat/${group_id}/members/${member_id}`))
+            }
           />
         }
       </div>

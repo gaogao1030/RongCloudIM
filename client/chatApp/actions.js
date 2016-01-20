@@ -4,12 +4,15 @@ ADD_FIND_GROUP,DEL_FIND_GROUP,
 ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
 SET_RONG_IM_CLIENT_INSTANCE,ADD_HISTORY_SEND_MESSAGE,
 ADD_HISTORY_RECEIVE_MESSAGE,SET_FETCH_HISTORY_MESSAGE_STATE,
-SET_LOADING_STATE,ADD_HISTORY_MESSAGES
+SET_LOADING_STATE,ADD_HISTORY_MESSAGES,SET_GROUP_MEMBER_INFO
 } from "./constants.js";
 import ES6Promise,{Promise} from "es6-promise";
 import fetch from "isomorphic-fetch";
 import { AWAIT_MARKER } from 'redux-await'
-import { fetchMyInfo,fetchMyGroups,fetchFindGroups,fetchGroupInfo } from './apis'
+import {
+fetchMyInfo,fetchMyGroups,fetchFindGroups,fetchGroupInfo,
+fetchGroupMemberInfoAndGroupGagList
+} from './apis'
 
 ES6Promise.polyfill()
 
@@ -73,42 +76,58 @@ export function addReceiveMessage(avatar,name,content){
 }
 
 export function getMyInfo(){
-  return {
-    type: SET_MY_INFO,
-    AWAIT_MARKER,
-    payload:{
-      my_info: fetchMyInfo()
-    }
+  const promise = fetchMyInfo()
+  return function(dispatch, getState){
+    dispatch({
+      type: SET_MY_INFO,
+      AWAIT_MARKER,
+      payload:{
+        my_info: promise
+      }
+    })
+    return promise
   }
 }
 
 export function getGroupInfo(id){
-  return {
-    type: SET_GROUP_INFO,
-    AWAIT_MARKER,
-    payload:{
-      group_info: fetchGroupInfo(id)
-    }
+  const promise = fetchGroupInfo(id)
+  return function(dispatch, getState){
+    dispatch({
+      type: SET_GROUP_INFO,
+      AWAIT_MARKER,
+      payload:{
+        group_info: promise
+      }
+    })
+    return promise
   }
 }
 
 export function getMyGroups(){
-  return {
-    type: SET_MY_GROUPS,
-    AWAIT_MARKER,
-    payload:{
-      my_groups: fetchMyGroups()
-    }
+  const promise = fetchMyGroups()
+  return function(dispatch, getState){
+    dispatch({
+      type: SET_MY_GROUPS,
+      AWAIT_MARKER,
+      payload:{
+        my_groups: promise
+      }
+    })
+    return promise
   }
 }
 
 export function getFindGroups(){
-  return {
-    type: SET_FIND_GROUPS,
-    AWAIT_MARKER,
-    payload:{
-      find_groups: fetchFindGroups()
-    }
+  const promise = fetchFindGroups()
+  return function(dispatch, getState){
+    dispatch({
+      type: SET_FIND_GROUPS,
+      AWAIT_MARKER,
+      payload:{
+        find_groups: promise
+      }
+    })
+    return promise
   }
 }
 
@@ -182,17 +201,20 @@ export function RongIMClientConnect(){
 
 export function RongIMClientSendGroupMessage(id,message){
   return function(dispatch,getState){
-    const msn = RongIMClient.TextMessage.obtain(message);
-    const conversationtype = RongIMClient.ConversationType.GROUP
-    const targetId = String(id)
-    RongIMClient.getInstance().sendMessage(conversationtype,targetId,msn,null,{
-      onSuccess: function(){
-        console.log("send success")
-      },
-      onError: function(errorCode){
-        console.log(errorCode)
-      }
+    const promise = new Promise(function(resolve,reject){
+      const msn = RongIMClient.TextMessage.obtain(message);
+      const conversationtype = RongIMClient.ConversationType.GROUP
+      const targetId = String(id)
+      RongIMClient.getInstance().sendMessage(conversationtype,targetId,msn,null,{
+        onSuccess: function(){
+          resolve()
+        },
+        onError: function(errCode){
+          reject(errCode)
+        }
+      })
     })
+    return promise
   }
 }
 
@@ -251,5 +273,19 @@ export function getRongIMClientInstance(instance){
   return {
     type: SET_RONG_IM_CLIENT_INSTANCE,
     rong_im_client_instance: instance
+  }
+}
+
+export function getGroupMemberInfo(group_id,user_id){
+  const promise = fetchGroupMemberInfoAndGroupGagList(group_id,user_id)
+  return function(dispatch, getState){
+    dispatch({
+      type: SET_GROUP_MEMBER_INFO,
+      AWAIT_MARKER,
+      payload:{
+        group_member_info: promise
+      }
+    })
+    return promise
   }
 }

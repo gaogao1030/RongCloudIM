@@ -7,11 +7,20 @@ DEL_FIND_GROUP,ADD_FIND_GROUP,
 ADD_MY_GROUP,DEL_MY_GROUP,SAVE_LAST_CLICK_FIND_GROUP,
 SET_RONG_IM_CLIENT_INSTANCE,ADD_HISTORY_SEND_MESSAGE,
 ADD_HISTORY_RECEIVE_MESSAGE,SET_FETCH_HISTORY_MESSAGE_STATE,
-SET_LOADING_STATE,ADD_HISTORY_MESSAGES
+SET_LOADING_STATE,ADD_HISTORY_MESSAGES,SET_GROUP_MEMBER_INFO
 } from "./constants.js";
 import { routeReducer } from 'redux-simple-router';
 import { reducer as awaitReducer } from 'redux-await';
 import { UPDATE_PATH } from 'redux-simple-router';
+
+function group_member_info(state={},action){
+  switch (action.type){
+  case SET_GROUP_MEMBER_INFO:
+    return Object.assign({},action.payload.group_member_info)
+  default:
+    return state
+  }
+}
 
 function loadingState(state={},action){
   switch (action.type) {
@@ -166,6 +175,7 @@ const ChatReducer = combineReducers({
   last_click_find_group,
   fetchHistoryMessageState,
   loadingState,
+  group_member_info,
   routing: routeReducer,
   await: awaitReducer,
 })

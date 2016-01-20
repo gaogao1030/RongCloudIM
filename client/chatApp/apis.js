@@ -97,26 +97,17 @@ export function joinGroup(id){
 
 export function fetchGroupMemberInfo(group_id,user_id){
   const promise = new Promise(function(resolve,reject){
-    fetch("/api/v1/groups/member_info",{
-      method: 'post',
-      credentials: 'include',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        group_id: grou_id,
-        user_id: user_id
-      })
+    fetch(`/api/v1/groups/member_info?group_id=${group_id}&user_id=${user_id}`,{
+      credentials: 'include'
     })
+    .then(checkStatus)
+    .then(parseJson)
+    .then((data)=>
+      resolve(data.user)
+    ).catch((error)=>
+      reject(error)
+    )
   })
-  .then(checkStatus)
-  .then(parseJson)
-  .then((data)=>
-    resolve(data)
-  ).catch((error)=>
-    reject(error)
-  )
   return promise
 }
 
@@ -125,10 +116,32 @@ export function fetchGroupGagList(group_id){
     fetch(`/api/v1/groups/user/gag_list?group_id=${group_id}`,{credentials: 'include'})
     .then(checkStatus)
     .then(parseJson)
-    .then((data)=>
-      resolve(data)
-    ).catch((error)=>
+    .then(function(data){
+      resolve(data.users)
+    })
+    .catch((error)=>
       reject(error)
+    )
+  })
+  return promise
+}
+
+export function fetchGroupMemberInfoAndGroupGagList(group_id,user_id){
+  const promise = new Promise(function(resolve,reject){
+    Promise.all([fetchGroupMemberInfo(group_id,user_id),fetchGroupGagList(group_id)])
+    .then(function([member_info,gag_list]){
+      let gag_end_time={gag_end_time: false}
+      for(let obj of gag_list){
+        if(Number(obj.userId)===member_info.id){
+          gag_end_time.gag_end_time=obj.time
+        }
+      }
+      member_info = Object.assign(member_info,gag_end_time)
+      resolve(member_info)
+      },
+      function(error){
+        reject(error)
+      }
     )
   })
   return promise

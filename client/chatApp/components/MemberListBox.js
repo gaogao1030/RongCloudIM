@@ -21,7 +21,7 @@ const creater_condition=function(creater,member){
 
 export default class MemberListBox extends Component {
   render(){
-    const { members, my_info,group_info } = this.props
+    const { members, my_info,group_info, handleTouchTap } = this.props
     return (
       <div>
         <List style={{"paddingBottom":"0","paddingTop":"0"}}>
@@ -30,6 +30,7 @@ export default class MemberListBox extends Component {
               is_me={me_condition(my_info,member)}
               is_creater={creater_condition({id:Number(group_info.creater_id)},member)}
               key={index}
+              onTouchTap={(e)=>handleTouchTap(e,group_info.id,member.id)}
             />
           )}
         </List>

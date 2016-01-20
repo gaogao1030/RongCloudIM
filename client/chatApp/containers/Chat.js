@@ -25,7 +25,8 @@ export default class Chat extends Component {
 
   componentWillMount(){
     const { dispatch,params } = this.props
-    dispatch(getGroupInfo(params.id))
+    const { group_id } = params
+    dispatch(getGroupInfo(group_id))
     dispatch(setLoadingState({fetchHistoryMessageState:true}))
     fetchMyInfo()
     .then((user) =>
@@ -35,7 +36,6 @@ export default class Chat extends Component {
       dispatch(RongIMClientConnect())
      )
     .then(function(){
-      //dispatch(getRongIMGroupHistoryMessages(params.id))
       dispatch(setLoadingState({fetchHistoryMessageState:false}))
     })
   }
@@ -50,21 +50,31 @@ export default class Chat extends Component {
     const { inputMessageRef } = refs;
     const content = inputMessageRef.getValue()
     if(String(content).replace(/^\s+/,'').replace(/\s+$/,'')!=""){
-      dispatch(RongIMClientSendGroupMessage(group_id,content))
-      dispatch(addSendMessage(avatar,name,content))
+      dispatch(RongIMClientSendGroupMessage(group_id,content)).then(function(){
+        dispatch(addSendMessage(avatar,name,content))
+      },function(errCode){
+        switch(errCode){
+          case null:
+            alert("禁言中")
+            break;
+        }
+        console.log("send faild")
+      })
       inputMessageRef.clearValue()
     }
   }
 
   fetchHistoryMessage(e){
     const { dispatch,params} = this.props
+    const { group_id } = params
     dispatch(setFetchHistoryMessageState(false))
-    dispatch(getRongIMGroupHistoryMessages(params.id))
+    dispatch(getRongIMGroupHistoryMessages(group_id))
   }
 
   render (){
     const { dispatch,group_info,fetchHistoryMessageState,loadingState,params } = this.props
     const { name } = group_info
+    const { group_id } = params
     return (
       <div>
       <AppBar
@@ -78,7 +88,7 @@ export default class Chat extends Component {
       }
       iconElementRight={
         <IconButton
-          onClick={()=> dispatch(pushPath(`/chat/${params.id}/members`))}
+          onClick={()=> dispatch(pushPath(`/chat/${group_id}/members`))}
         >
           <SocialGroup />
         </IconButton>
