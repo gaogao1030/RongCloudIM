@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getGroupMemberInfo, getGroupInfo } from '../actions';
+import { getGroupMemberInfo, getGroupInfo, gagAdd, gagRollback } from '../actions';
 import { connect } from 'redux-await';
 import AppBar from "material-ui/lib/app-bar";
 import IconButton from 'material-ui/lib/icon-button';
@@ -24,6 +24,32 @@ const creater_condition=function(creater,member){
 }
 
 export default class MemberInfo extends Component {
+  gagAdd(){
+    const { dispatch,params } = this.props
+    const {group_id,member_id} = params
+    dispatch(gagAdd(group_id,member_id))
+    .then(()=>
+      dispatch(getGroupMemberInfo(group_id,member_id))
+    ,function(error){
+      if(error.response.status===403){
+        alert("你没有权限操作这个")
+      }
+    })
+  }
+
+  gagRollback(){
+    const { dispatch,params } = this.props
+    const {group_id,member_id} = params
+    dispatch(gagRollback(group_id,member_id))
+    .then(()=>
+      dispatch(getGroupMemberInfo(group_id,member_id))
+    ,function(error){
+      if(error.response.status===403){
+        alert("你没有权限操作这个")
+      }
+    })
+  }
+
   componentWillMount(){
     const { dispatch,params } = this.props
     const {group_id,member_id} = params
@@ -81,15 +107,17 @@ export default class MemberInfo extends Component {
             >
             <RaisedButton secondary={true} label="开始禁言"
             style={{"width":"90%"}}
-            onTouchTap={(e)=>alert("start")}
+            onTouchTap={(e)=>this.gagAdd()}
+            disabled={gag_end_time? true:false}
             />
             </div>
             <div
-            style={{"width":"50%","display":"inline-block","marginRight":"0","textAlign":"center"}}
+            style={{"width":"50%","display":"inline-block","marginRight":"0","textAlgn":"center"}}
             >
             <RaisedButton label="解除禁言"
             style={{"width":"90%"}}
-            onTouchTap={(e)=>alert("end")}
+            onTouchTap={(e)=>this.gagRollback()}
+            disabled={gag_end_time? false:true}
             />
             </div>
           </CardActions>

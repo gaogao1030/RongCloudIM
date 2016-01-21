@@ -11,8 +11,9 @@ import fetch from "isomorphic-fetch";
 import { AWAIT_MARKER } from 'redux-await'
 import {
 fetchMyInfo,fetchMyGroups,fetchFindGroups,fetchGroupInfo,
-fetchGroupMemberInfoAndGroupGagList
+fetchGroupMemberInfoAndGroupGagList,userGagAdd,userGagRollback
 } from './apis'
+import "babel-polyfill"
 
 ES6Promise.polyfill()
 
@@ -289,3 +290,16 @@ export function getGroupMemberInfo(group_id,user_id){
     return promise
   }
 }
+
+export function gagAdd(group_id,user_id,minute="60"){
+  return function(dispatch, getState){
+    return userGagAdd(group_id,user_id,minute)
+  }
+}
+
+export function gagRollback(group_id,user_id){
+  return function(dispatch, getState){
+    return userGagRollback(group_id,user_id)
+  }
+}
+

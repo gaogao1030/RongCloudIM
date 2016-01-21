@@ -1,3 +1,4 @@
+import "babel-polyfill"
 function checkStatus(response){
  if (response.status >= 200 && response.status < 300) {
    return response
@@ -142,6 +143,57 @@ export function fetchGroupMemberInfoAndGroupGagList(group_id,user_id){
       function(error){
         reject(error)
       }
+    )
+  })
+  return promise
+}
+
+export function userGagAdd(group_id,user_id,minute){
+  const promise = new Promise(function(resolve,reject){
+    fetch("/api/v1/groups/user/gag_add",{
+      method: 'post',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        group_id: group_id,
+        user_id: user_id,
+        minute: minute
+      })
+    })
+    .then(checkStatus)
+    .then(parseJson)
+    .then((data)=>
+      resolve(data)
+    ).catch((error)=>
+      reject(error)
+    )
+  })
+  return promise
+}
+
+export function userGagRollback(group_id,user_id){
+  const promise = new Promise(function(resolve,reject){
+    fetch("/api/v1/groups/user/gag_rollback",{
+      method: 'post',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        group_id: group_id,
+        user_id: user_id
+      })
+    })
+    .then(checkStatus)
+    .then(parseJson)
+    .then((data)=>
+      resolve(data)
+    ).catch((error)=>
+      reject(error)
     )
   })
   return promise

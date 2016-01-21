@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import "babel-polyfill";
 import {
 ADD_SEND_MESSAGE, ADD_RECEIVE_MESSAGE,
 SET_MY_INFO, SET_MY_GROUPS,

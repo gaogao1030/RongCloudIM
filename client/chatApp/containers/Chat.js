@@ -15,7 +15,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import ChatBox from "../components/ChatBox";
 import { Link } from 'react-router';
 import { pushPath } from 'redux-simple-router';
-import {fetchMyInfo } from '../apis'
+import {fetchMyInfo } from '../apis';
 import "./Chat.scss";
 
 export default class Chat extends Component {

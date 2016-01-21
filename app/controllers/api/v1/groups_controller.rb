@@ -192,7 +192,7 @@ class Api::V1::GroupsController < Api::BaseControllerController
       return
     end
     if current_user.id != group.creater_id.to_i
-      render json: {message: "你无权禁言，因为你不是创建者"}
+      render json: {message: "你无权禁言，因为你不是创建者"}, status: 403
       return
     end
     result = RongCloud::Api.new.groupUserGagAdd(userId: params[:user_id],groupId: params[:group_id],minute: params[:minute])
@@ -210,7 +210,7 @@ class Api::V1::GroupsController < Api::BaseControllerController
       return
     end
     if current_user.id != group.creater_id.to_i
-      render json: {message: "你无权解除禁言，因为你不是创建者"}
+      render json: {message: "你无权解除禁言，因为你不是创建者"}, status: 403
     end
     result = RongCloud::Api.new.groupUserGagRollback(userId: params[:user_id],groupId: params[:group_id])
     if result.parsed_response["code"] == 200
