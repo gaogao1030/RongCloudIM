@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "node ./server.js",
-    "prod": "webpack -p --config ./webpack.config.prod.js"
+    "dev": "node ./server.js",
+    "prod": "webpack -p --progress --profile --colors --config ./webpack.config.prod.js"
   },
   "author": "",
   "license": "ISC",
@@ -39,8 +39,11 @@
     "babel-preset-react": "^6.3.13",
     "css": "^2.2.1",
     "css-loader": "^0.23.1",
+    "jshint": "^2.9.1",
+    "jshint-loader": "^0.8.3",
     "node-sass": "^3.4.2",
     "raw": "^0.1.4",
+    "redux-await": "^5.0.0",
     "redux-devtools": "^3.0.1",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.1",

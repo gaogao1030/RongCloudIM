@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
   entry: {
     homeApp: "./homeApp/",
     chatApp: "./chatApp/"
@@ -12,7 +12,6 @@ module.exports = {
     filename: '[name].bundle.js',
   },
   plugins:[
-    //new webpack.optimize.CommonsChunkPlugin('common.js'),
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
@@ -21,6 +20,11 @@ module.exports = {
     })
   ],
   module: {
+    perLoaders: [{
+      test:/\.js$/,
+      include: __dirname,
+      loader: 'jshint-loader'
+    }],
     loaders: [{
       test:/\.js$/,
       loaders: ['babel'],
@@ -28,8 +32,9 @@ module.exports = {
       include: __dirname
     },{
       test: /\.scss?$/,
-      loaders: ['style','css','sass'],
+      loaders: ['css','sass'],
       include: __dirname
     }]
-  }
+  },
+  jshint: { "esnext": true }
 }

@@ -27,6 +27,11 @@ module.exports = {
     })
   ],
   module: {
+    perLoaders: [{
+      test:/\.js$/,
+      include: __dirname,
+      loader: 'jshint-loader'
+    }],
     loaders: [{
       test:/\.js$/,
       loaders: ['babel'],
@@ -37,5 +42,6 @@ module.exports = {
       loaders: ['style','css','sass'],
       include: __dirname
     }]
-  }
+  },
+  jshint: { "esnext": true }
 }
