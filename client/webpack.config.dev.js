@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var host = "http://gaoyh.corp.cimu.com:4000"
+var host = "http://localhost:3000"
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',

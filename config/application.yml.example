@@ -1,3 +1,4 @@
+
 # Add configuration values here, as shown below.
 #
 # pusher_app_id: "2954"
@@ -10,7 +11,12 @@
 #   stripe_api_key: sk_live_EeHnL644i6zo4Iyq4v1KdV9H
 #   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
 
-RongCloudAppKey: 25wehl3uwo5zw
-RongCloudAppSecret: VwsH8mJw9iO
-RongCloudHost: "https://api.cn.ronghub.com"
-AssetsHost: "http://gaoyh.corp.cimu.com:4000"
+development:
+  RongCloudAppKey: pvxdm17jxazwr
+  RongCloudAppSecret: mOl9eVVs04I
+  RongCloudHost: "https://api.cn.ronghub.com"
+  AssetsHost: "http://192.168.2.130:4000"
+
+production:
+  AssetsHost: "/assets"
+  SECRET_KEY_BASE: "c47ace1e0fbc537b6e617478d234d436b8594a83858d125f96afb96035a091018f6fa9636e176bbff819e46840bbbeab8e85f4b96d2a71699ea35bfb0ff36d7c"

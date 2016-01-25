@@ -24,11 +24,17 @@
     "react-router": "^1.0.3",
     "react-tap-event-plugin": "^0.2.1",
     "redux": "^3.0.4",
+    "redux-await": "^5.0.0",
     "redux-simple-router": "^1.0.2",
     "redux-thunk": "^1.0.2",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-hot-middleware": "^2.6.0"
+    "webpack-hot-middleware": "^2.6.0",
+    "sass-loader": "^3.1.2",
+    "node-sass": "^3.4.2",
+    "style-loader": "^0.13.0",
+    "jshint": "^2.9.1",
+    "jshint-loader": "^0.8.3"
   },
   "devDependencies": {
     "babel": "^6.3.13",
@@ -39,15 +45,9 @@
     "babel-preset-react": "^6.3.13",
     "css": "^2.2.1",
     "css-loader": "^0.23.1",
-    "jshint": "^2.9.1",
-    "jshint-loader": "^0.8.3",
-    "node-sass": "^3.4.2",
     "raw": "^0.1.4",
-    "redux-await": "^5.0.0",
     "redux-devtools": "^3.0.1",
     "redux-devtools-dock-monitor": "^1.0.1",
-    "redux-devtools-log-monitor": "^1.0.1",
-    "sass-loader": "^3.1.2",
-    "style-loader": "^0.13.0"
+    "redux-devtools-log-monitor": "^1.0.1"
   }
 }
