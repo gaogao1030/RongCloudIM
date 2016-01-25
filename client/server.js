@@ -3,7 +3,7 @@
   webpack = require('webpack');
   webpackDevMiddleware = require('webpack-dev-middleware');
   webpackHotMiddleware = require('webpack-hot-middleware');
-  config = require('./webpack.config');
+  config = require('./webpack.config.dev');
   express = new require('express');
   app = new express;
   port = 4000;
