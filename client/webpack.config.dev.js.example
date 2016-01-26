@@ -1,3 +1,4 @@
+
 var path = require('path');
 var webpack = require('webpack');
 var host = "http://gaoyh.corp.cimu.com:4000"
@@ -5,15 +6,9 @@ var host = "http://gaoyh.corp.cimu.com:4000"
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    //home:[
-    //`webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
-    //'./app/startup/home.js'],
     homeApp:[
     `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
     './homeApp/'],
-    //chat: [
-    //  `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
-    //  './chat.js'],
     chatApp: [
       `webpack-hot-middleware/client?path=${host}/__webpack_hmr`,
       './chatApp/'],
@@ -26,9 +21,18 @@ module.exports = {
   plugins:[
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      'process.env.isDev': true
+    })
   ],
   module: {
+    perLoaders: [{
+      test:/\.js$/,
+      include: __dirname,
+      loader: 'jshint-loader'
+    }],
     loaders: [{
       test:/\.js$/,
       loaders: ['babel'],
@@ -39,5 +43,7 @@ module.exports = {
       loaders: ['style','css','sass'],
       include: __dirname
     }]
-  }
+  },
+  jshint: { "esnext": true }
 }
+

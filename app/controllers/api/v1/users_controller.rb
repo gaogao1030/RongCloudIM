@@ -78,6 +78,4 @@ class Api::V1::UsersController < Api::BaseControllerController
     render json: current_user,serializer: UserSerializer,status: 200
   end
 
-
-
 end

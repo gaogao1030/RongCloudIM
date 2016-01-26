@@ -11,7 +11,8 @@ import fetch from "isomorphic-fetch";
 import { AWAIT_MARKER } from 'redux-await'
 import {
 fetchMyInfo,fetchMyGroups,fetchFindGroups,fetchGroupInfo,
-fetchGroupMemberInfoAndGroupGagList,userGagAdd,userGagRollback
+fetchGroupMemberInfoAndGroupGagList,userGagAdd,userGagRollback,
+resetRongYunToken
 } from './apis'
 import "babel-polyfill"
 
@@ -150,6 +151,20 @@ export function saveLastClickFindGroup(find_group){
   return {
     type: SAVE_LAST_CLICK_FIND_GROUP,
     last_click_find_group:find_group
+  }
+}
+
+export function resetUserToken(){
+  const promise = resetRongYunToken()
+  return function(dispatch, getState){
+    dispatch({
+      type: SET_MY_INFO,
+      AWAIT_MARKER,
+      payload:{
+        my_info: promise
+      }
+    })
+    return promise
   }
 }
 

@@ -198,3 +198,24 @@ export function userGagRollback(group_id,user_id){
   })
   return promise
 }
+
+export function resetRongYunToken(){
+  const promise = new Promise(function(resolve,reject){
+    fetch("/api/v1/users/reset_rongyun_token",{
+      method: 'post',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(checkStatus)
+    .then(parseJson)
+    .then((data)=>
+      resolve(data)
+    ).catch((error)=>
+      reject(error)
+    )
+  })
+  return promise
+}

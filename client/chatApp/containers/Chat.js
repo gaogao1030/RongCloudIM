@@ -4,7 +4,7 @@ import { connect } from 'redux-await';
 import {
 addSendMessage, getMyInfo, RongIMClientConnect,
 getGroupInfo, RongIMClientSendGroupMessage,getRongIMGroupHistoryMessages,
-setFetchHistoryMessageState,setLoadingState
+setFetchHistoryMessageState,setLoadingState,resetUserToken
 } from '../actions';
 import AppBar from "material-ui/lib/app-bar";
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
@@ -28,7 +28,7 @@ export default class Chat extends Component {
     const { group_id } = params
     dispatch(getGroupInfo(group_id))
     dispatch(setLoadingState({fetchHistoryMessageState:true}))
-    fetchMyInfo()
+    dispatch(getMyInfo())
     .then((user) =>
       dispatch({type: SET_MY_INFO,payload: {my_info: user}})
      )
@@ -37,6 +37,12 @@ export default class Chat extends Component {
      )
     .then(function(){
       dispatch(setLoadingState({fetchHistoryMessageState:false}))
+    },function(errCode){
+      switch(errCode){
+      case RongIMClient.ConnectErrorStatus.TOKEN_INCORRECT:
+        dispatch(resetUserToken())
+        break
+      }
     })
   }
 
